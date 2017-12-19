@@ -1,0 +1,106 @@
+/* div.pai {
+    width: 608px;
+    border: 1px solid #ddd;
+    background-color: #448650; 
+    padding: 8px 10px;
+    margin-bottom: 16px;
+    text-align: center;
+    color: #fff;
+  }
+  div.pai p { padding: 10px; }
+  div.animat { display: inline-block;  margin-right: 16px; }
+  div.animat:last-child { margin-right: 0; }
+  
+  .box { 
+    display:table-cell;
+    height:80px;
+    width: 500px;
+    background-color: #ccc;
+    border-radius: 0;
+    border: 1px solid #999;
+    vertical-align: middle;
+    text-align: center;
+    color: #333
+  }
+  
+  #ease.box {
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+  }
+  #ease-in.box {
+    -webkit-transition: all 1s ease-in;
+    -moz-transition: all 1s ease-in;
+    -ms-transition: all 1s ease-in;
+    -o-transition: all 1s ease-in;
+    transition: all 1s ease-in;
+  }
+  #ease-out.box {
+    -webkit-transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -ms-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+  }
+  #ease-in-out.box {
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+  }
+  #linear.box {
+    -webkit-transition: all 1s linear;
+    -moz-transition: all 1s linear;
+    -ms-transition: all 1s linear;
+    -o-transition: all 1s linear;
+    transition: all 1s linear;
+  }
+  #cubic-bezier.box {
+    -webkit-transition: all 1s cubic-bezier(0.5,0.8,1,0.40);
+    -moz-transition: all 1s cubic-bezier(0.5,0.8,1,0.40);
+    -ms-transition: all 1s cubic-bezier(0.5,0.8,1,0.40);
+    -o-transition: all 1s cubic-bezier(0.5,0.8,1,0.40);
+    transition: all 1s cubic-bezier(0.5,0.8,1,0.40);
+  }
+  
+  div.pai:hover #ease, 
+  div.pai:hover #ease-in, 
+  div.pai:hover #ease-out,
+  div.pai:hover #ease-in-out,
+  div.pai:hover #linear,
+  div.pai:hover #cubic-bezier {
+    height:100px;
+    border: 1px solid #000;
+    background-color: #333;
+    color: #fff;
+  } */
+
+
+
+
+.box-hidden {
+    display: none;
+    height: 0px;
+}
+
+/* ensure box is displayed block during the transition  */
+.box-transition.box-hidden {
+    display: block;
+    opacity: 0;
+    height: 0px; 
+}
+
+.box-transition {
+    
+    background-color: rgb(233, 21, 21);
+    border: 1px solid rgb(255, 254, 254);
+    vertical-align: middle;
+    text-align: center;
+    color: rgb(255, 253, 253);
+    border-radius: 8px;
+    box-shadow: 2px 2px 17px 1px rgba(0,0,0,0.47);
+    transition: all 0.5s ease-in-out;
+}

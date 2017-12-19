@@ -1,0 +1,22 @@
+<div class="row" style="width: 98%; margin: auto;">
+    <form #f="ngForm" (ngSubmit)="loginUser(f.value)" class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+            <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'account'"></i>
+          <input id="icon_prefix" type="text" class="validate" name="login" [(ngModel)]="f.login">
+          <label for="icon_prefix">Usuario</label>
+        </div>
+        <div class="input-field col s6">
+            <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'magnify'"></i>
+          <input id="icon_telephone" type="password" name="senha" [(ngModel)]="f.senha"  class="validate">
+          <label for="icon_telephone">Senha</label>
+        </div>
+      </div>
+      <div> 
+        <button mz-button mz-icon-mdi size="'18px'" icon="content-save" type="submit">
+          Enviar
+        </button>
+      </div>
+      <br>
+    </form>
+  </div>
