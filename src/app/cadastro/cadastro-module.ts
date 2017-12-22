@@ -9,6 +9,7 @@ import { ListaComponent } from '../lista/lista.component';
 import { SearchCepService } from './services/search-cep.service';
 import { CadastroRoutingModule } from './cadastro-routing-module';
 import { ApiUsuarioService } from './services/api-usuario.service';
+import { DependentesComponent } from './dependentes/dependentes.component';
 
 
 
@@ -24,7 +25,8 @@ import { ApiUsuarioService } from './services/api-usuario.service';
     declarations: [
         CadastroComponent,
         ListaComponent,
-        EnderecoComponent
+        EnderecoComponent,
+        DependentesComponent
     ],
     providers: [
         SearchCepService,
