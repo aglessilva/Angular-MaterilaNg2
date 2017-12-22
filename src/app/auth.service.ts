@@ -48,7 +48,7 @@ export class AuthService {
 
     logoutUser(user: IUsuario)
     {
-        debugger
+        
         return this.apiUsuarioService.putUser(user)
         .toPromise()
         .then((ret: Response ) =>{

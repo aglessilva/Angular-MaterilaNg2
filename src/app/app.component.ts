@@ -30,7 +30,6 @@ export class AppComponent {
           });          
 
           this.authService.trigger.subscribe((mostrar: IUsuario) =>{
-              debugger
               this.habilitar = mostrar.isAuthentication
               this.user.idUsuario =  mostrar.idUsuario
               this.user.nome =  mostrar.nome.trim()

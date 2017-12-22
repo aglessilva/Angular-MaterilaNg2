@@ -18,7 +18,7 @@ export class CadastroComponent implements OnInit {
   dateActual: number =  Date.now();
   objCep:  IEndereco = null;
   contratoUsuario:IContratoUsuario = { usuario: {} as IUsuario, enderecos: [] as Array<IEndereco>, endereco: {} as IEndereco } as IContratoUsuario;
-  isOk: boolean;
+  isOk: boolean =  true;
   hasRow: boolean
   isChange: boolean;
   private id: number;
@@ -70,9 +70,17 @@ export class CadastroComponent implements OnInit {
         console.clear()
           console.log(err.message)
       })
-    else
+      else
       this.apiUsuarioService.postUser(user)
-
+        .toPromise()
+        .then((response: Response) => {
+            console.log(response)
+        })
+        .catch((err: Error) => {
+          console.clear()
+            console.log(err.message)
+        })
+      
   }
 
   getUserById(_id: number)
@@ -80,7 +88,7 @@ export class CadastroComponent implements OnInit {
     this.apiUsuarioService.getUserById(_id)
     .toPromise()
     .then((res: any) => {
-      this.isOk =  true;
+      this.isOk = true
       delete res['$id'];
 
       res.enderecos.forEach((_endereco: IEndereco)=> {
@@ -102,7 +110,7 @@ export class CadastroComponent implements OnInit {
     .toPromise()
     .then((result: any) => {
       this.objCep = result as IEndereco;
-      this.isOk =  true;
+      this.isOk =  false;
       this.view(formCep)
     })
     .catch(err => {
@@ -125,7 +133,7 @@ export class CadastroComponent implements OnInit {
 
   editAddress(index: number)
   {
-    this.hasRow = true;
+    this.isOk =  false;
     this.contratoUsuario.endereco = this.contratoUsuario.enderecos[index];
   }
 
@@ -146,7 +154,6 @@ export class CadastroComponent implements OnInit {
 
   mudou()
   {
-    debugger
     this.isChange =  true;
   }
 }

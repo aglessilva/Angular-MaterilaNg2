@@ -2,7 +2,7 @@ import { ApiUsuarioService } from './../cadastro/services/api-usuario.service';
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http/src/static_response';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { LoaderService } from '../loader.service';
 
 @Component({
@@ -14,13 +14,24 @@ export class ListaComponent implements OnInit {
 
   constructor(
     private apiUsuarioService: ApiUsuarioService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private routeNavigate: ActivatedRoute,
   )
      { }
 
   usuarios: Array<IUsuario> ;
  
   ngOnInit() {
+    // this.routeNavigate.data.subscribe(
+    //   (users: any) => { 
+    //     this.usuarios = new Array()
+    //     users.usuario.forEach(element => {
+    //       delete element["$id"]
+    //       delete element["enderecos"]
+    //       this.usuarios.push(element)
+    //     });
+    //   });
+
     this.getUser()
   }
 

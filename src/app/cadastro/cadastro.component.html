@@ -1,5 +1,5 @@
 
-<form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario)" >
+<form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario)" novalidate >
     <div class="row">
         <fieldset style=" border-radius: 5px; width: 98%; margin: auto;">
             <div class="col s4">
@@ -22,9 +22,14 @@
         <fieldset style=" border-radius: 5px; width: 98%; margin: auto;">
             <div class="row">
                 <div class="col s4">
+                    
                     <mz-input-container>
-                        <input requerid mz-input [label]="'Nome'" name="nome"  (ngModelChange)="mudou();" [(ngModel)]="contratoUsuario.usuario.nome" [validate]="true" [dataError]="'campo obrigatório'"
-                            id="nome-input" type="text">
+                        <input mz-input  mz-validation required
+                                [label]="'Nome'" name="nome" (ngModelChange)="mudou();" 
+                                [(ngModel)]="contratoUsuario.usuario.nome" 
+                                [dataError]="'campo obrigatório'"
+                                [validate]="true" 
+                                id="nome-input" type="text">
                     </mz-input-container>
                 </div>
                 <div class="col s4">
@@ -45,7 +50,7 @@
                 <div class="col s4">
                     <mz-input-container>
                         <input requerid mz-input  type="date"  placeholder="" 
-                        [label]="'Data de Nascimento'" name="dataNascimento" [ngModel]="contratoUsuario.usuario.dataNascimento | date:'yyyy-MM-dd'"
+                        [label]="'Data de Nascimento'" name="dataNascimento" [(ngModel)]="contratoUsuario.usuario.dataNascimento "
                             [validate]="true" [dataError]="'Data Invalida'"  />
                     </mz-input-container>
                     
@@ -56,67 +61,67 @@
                     </mz-switch-container>
                 </div>
             </div>
-            <fieldset  ngModelGroup="endereco"  style=" border-radius: 5px; width: 95%; margin: auto;" [hidden]="!isOk">
+            <fieldset  ngModelGroup="endereco"  style=" border-radius: 5px; width: 95%; margin: auto;" [hidden]="isOk">
                 <legend class="red-text">Enderecos</legend>
-                <div   style="background-color: #f6f6f6; border-radius: 5px">
-                    <div class="row">
-                        <div class="col s4">
-                            <mz-input-container>
-                                <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'map-marker'"></i>
-                                
-                                <input mz-input [label]="'Cep'" name="cep" [(ngModel)]="contratoUsuario.endereco.cep" (ngModelChange)="mudou();" id="cep-input" length="150" type="text">
-                            </mz-input-container>
-                        </div>
-                        <div class="col s4">
-                            <mz-input-container>
-                                <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'home'"></i>
-                                <!-- [validate]="true" [dataError]="'Email is invalid'" [dataSuccess]="'Email is valid'" -->
-                                <input mz-input [label]="'logradouro'" name="logradouro" [(ngModel)]="contratoUsuario.endereco.logradouro" id="logradouro-input" length="150" type="text">
-                            </mz-input-container>
-                        </div>
-                        <div class="col s4">
-                            <mz-input-container>
-                                <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'tag'"></i>
-                                <input [dataError]="'informe o seu endereço'"  mz-input [label]="'bairro'" name="bairro"
-                                [(ngModel)]="contratoUsuario.endereco.bairro" id="bairro-input" length="100" type="text">
-                            </mz-input-container>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s3">
-                            <mz-select-container>
-                                <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'flag-variant'"></i>
-                                <select mz-select name="uf" [(ngModel)]="contratoUsuario.endereco.localidade" id="options-select" [label]="'UF'" [placeholder]="'Selecione...'">
-                                    <option class="left circle" value="MG" >Minas Geraia</option>
-                                    <option class="left circle" value="SP" >São Paulo</option>
-                                    <option class="left circle" value="CE" >Ceará</option>
-                                </select>
-                            </mz-select-container>
-                        </div>
-                        <div class="col s3">
+                    <div   style="background-color: #f6f6f6; border-radius: 5px">
+                        <div class="row">
+                            <div class="col s4">
                                 <mz-input-container>
-                                    <i mz-icon-mdi mz-input-prefix [size]="'18px'" [icon]="'tag'"></i>
-                                    <input  mz-input [label]="'complemento'" name="complemento"
-                                    [(ngModel)]="contratoUsuario.endereco.complemento" id="complemento-input" length="100" type="text">
+                                    <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'map-marker'"></i>
+                                    
+                                    <input mz-input [label]="'Cep'" name="cep" [(ngModel)]="contratoUsuario.endereco.cep" (ngModelChange)="mudou();" id="cep-input" length="150" type="text">
                                 </mz-input-container>
                             </div>
-                        <div class="col s2 red-text" style="margin-top: 40px;">
-                            <i mz-icon-mdi mz-tooltip tooltip="Adicionar novo enereço" [position]="'top'" [align]="'center'" [icon]="'plus-circle-outline'" class="link"></i>
-                            <i mz-icon-mdi mz-tooltip tooltip="Adicionar novo enereço" [position]="'top'" [align]="'center'" [icon]="'add'" class="link"></i>
+                            <div class="col s4">
+                                <mz-input-container>
+                                    <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'home'"></i>
+                                    <!-- [validate]="true" [dataError]="'Email is invalid'" [dataSuccess]="'Email is valid'" -->
+                                    <input mz-input [label]="'logradouro'" name="logradouro" [(ngModel)]="contratoUsuario.endereco.logradouro" id="logradouro-input" length="150" type="text">
+                                </mz-input-container>
+                            </div>
+                            <div class="col s4">
+                                <mz-input-container>
+                                    <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'tag'"></i>
+                                    <input [dataError]="'informe o seu endereço'"  mz-input [label]="'bairro'" name="bairro"
+                                    [(ngModel)]="contratoUsuario.endereco.bairro" id="bairro-input" length="100" type="text">
+                                </mz-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <mz-select-container>
+                                    <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'flag-variant'"></i>
+                                    <select mz-select name="uf" [(ngModel)]="contratoUsuario.endereco.localidade" id="options-select" [label]="'UF'" [placeholder]="'Selecione...'">
+                                        <option class="left circle" value="MG" >Minas Geraia</option>
+                                        <option class="left circle" value="SP" >São Paulo</option>
+                                        <option class="left circle" value="CE" >Ceará</option>
+                                    </select>
+                                </mz-select-container>
+                            </div>
+                            <div class="col s3">
+                                    <mz-input-container>
+                                        <i mz-icon-mdi mz-input-prefix [size]="'18px'" [icon]="'tag'"></i>
+                                        <input  mz-input [label]="'complemento'" name="complemento"
+                                        [(ngModel)]="contratoUsuario.endereco.complemento" id="complemento-input" length="100" type="text">
+                                    </mz-input-container>
+                                </div>
+                            <div class="col s2 red-text" style="margin-top: 40px;">
+                                <i mz-icon-mdi mz-tooltip tooltip="Adicionar novo enereço" [position]="'top'" [align]="'center'" [icon]="'plus-circle-outline'" class="link"></i>
+                                <i mz-icon-mdi mz-tooltip tooltip="Adicionar novo enereço" [position]="'top'" [align]="'center'" [icon]="'add'" class="link"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row fonte-default border-botton" style="padding: 2px !important;" *ngFor="let item of contratoUsuario.enderecos; let i = index;">
+            </fieldset>
+                <div class="row fonte-default border-botton" style="padding: 2px !important;  width: 97%; margin: 5px 5px 5px 5px;" *ngFor="let item of contratoUsuario.enderecos; let i = index;">
                     <div class="col s3">{{ item.bairro }}</div>
                     <div class="col s3">{{ item.logradouro }}</div>
                     <div class="col s2">{{ item.cep }}</div>
                     <div class="col s2">{{ item.localidade }}</div>
                     <div class="col s2 red-text">
-                            <i mz-icon-mdi mz-tooltip tooltip="Editar registro" [position]="'top'" [align]="'center'" [icon]="'pencil-circle-outline'" class="link" (click)="editAddress(i)"></i>
+                            <i mz-icon-mdi mz-tooltip tooltip="Editar registro" [position]="'top'" [align]="'center'" [icon]="'pencil-circle-outline'" class="link" (click)="editAddress(0)"></i>
                             <i mz-icon-mdi mz-tooltip tooltip="Remover registro" [position]="'top'" [align]="'center'" [icon]="'minus-circle-outline'" class="link" (click)="deleteEndereco(item.id, i)"></i>
                     </div>
                 </div>
-            </fieldset>
         </fieldset>
 
     </div>

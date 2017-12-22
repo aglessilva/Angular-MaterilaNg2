@@ -1,22 +1,175 @@
-<div class="row" style="width: 98%; margin: auto;">
-    <form #f="ngForm" (ngSubmit)="loginUser(f.value)" class="col s12">
+<div class="row body" style="width: 50%; margin: auto; border:1px solid #cccccc; border-radius: 10px;margin-top: 100px;">
+    <form #f="ngForm" (ngSubmit)="loginUser(f.value)" class="col s12" novalidate>
       <div class="row">
-        <div class="input-field col s6">
-            <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'account'"></i>
-          <input id="icon_prefix" type="text" class="validate" name="login" [(ngModel)]="f.login">
+        <div class="input-field col s12">
+            <i mz-icon-mdi mz-input-prefix  [size]="'24px'" [icon]="'account'"></i>
+          <input mz-input required id="icon_prefix" type="text" class="validate" name="login" maxlength="5" [(ngModel)]="f.login">
           <label for="icon_prefix">Usuario</label>
         </div>
-        <div class="input-field col s6">
+        <div class="input-field col s12">
             <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'magnify'"></i>
-          <input id="icon_telephone" type="password" name="senha" [(ngModel)]="f.senha"  class="validate">
+          <input required id="icon_telephone" type="password" name="senha" [(ngModel)]="f.senha"  class="validate">
           <label for="icon_telephone">Senha</label>
         </div>
-      </div>
-      <div> 
-        <button mz-button mz-icon-mdi size="'18px'" icon="content-save" type="submit">
-          Enviar
-        </button>
-      </div>
-      <br>
+      </div>      
+          <div class="row"> 
+            <div class="col s6 offset-s1">
+              <button mz-button mz-icon-mdi size="'18px'" [disabled]="!f.valid" icon="content-save" type="submit">
+                Enviar
+              </button>
+            </div>
+          </div>
     </form>
   </div>
+<!-- <div class="fixed-action-btn horizontal click-to-toggle">
+  <a class="btn-floating btn-large red"><i class="large material-icons">add</i></a>
+  <ul>
+    <li><a href="#" class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+    <li><a href="#" class="btn-floating yellow"><i class="material-icons">format_quote</i></a></li>
+    <li><a href="#" class="btn-floating green"><i class="material-icons">publish</i></a></li>
+    <li><a href="#" class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+  </ul>
+</div> -->
+
+<!-- <div class="fixed-action-btn toolbar">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">insert_chart</i></a></li>
+      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">format_quote</i></a></li>
+      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">publish</i></a></li>
+      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+</div> -->
+
+
+<!-- <div class="fixed-action-btn">
+  <a class="btn-floating btn-large red"><i class="large material-icons">add</i></a>
+  <ul>
+    <li><a href="#" class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+    <li><a href="#" class="btn-floating yellow"><i class="material-icons">format_quote</i></a></li>
+    <li><a href="#" class="btn-floating green"><i class="material-icons">publish</i></a></li>
+    <li><a href="#" class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+  </ul>
+</div> -->
+
+<!-- <a href="#" class="btn-floating"> <i mz-icon-mdi mz-input-prefix  [size]="'24px'" [icon]="'account'"></i></a> -->
+
+<!-- <ul class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+</ul> -->
+
+<!-- <ul class="collapsible" data-collapsible="expandable">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+</ul> -->
+
+<!-- 
+<ul class="collapsible popout" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+</ul> -->
+
+
+
+<!-- <ul class="collection">
+  <li class="collection-item avatar">
+    <img src="" alt="" class="circle">
+    <span class="title">Title</span>
+    <p>First Line <br>
+      Second Line
+    </p>
+    <a href="#!" class="secondary-content"> <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'account'"></i></a>
+  </li>
+  <li class="collection-item avatar">
+     <i class="material-icons circle">folder</i>
+    <span class="title">Title</span>
+    <p>First Line <br>
+      Second Line
+    </p>
+    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+  </li>
+</ul> -->
+
+
+<!-- <ul class="collection">
+  <li class="collection-item dismissable"><div>Alvin<a href="#!" class="secondary-content"><i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'send'"></i></a></div></li>
+  <li class="collection-item dismissable"><div>Alvin<a href="#!" class="secondary-content"><i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'send'"></i></a></div></li>
+  <li class="collection-item dismissable"><div>Alvin<a href="#!" class="secondary-content"><i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'send'"></i></a></div></li>
+  <li class="collection-item dismissable"><div>Alvin<a href="#!" class="secondary-content"><i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'send'"></i></a></div></li>
+</ul> -->
+
+<!-- <div class="collection">
+  <a href="#" class="collection-item active">Alvin</a>
+  <a href="#" class="collection-item">Alvin</a>
+  <a href="#" class="collection-item">Alvin</a>
+</div> -->
+
+<!-- <a class="btn" onclick="Materialize.toast('I am a toast', 4000,'',function(){alert('Your toast was dismissed')})">Toast!</a> -->
+
+<!-- <a class="btn" onclick="Materialize.toast('I am a toast', 4000)">Toast!</a> -->
+
+<!-- <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="I am tooltip">Hover me!</a> -->
+
+<!-- <div class="fixed-action-btn">
+  <a id="menu" class="waves-effect waves-light btn-large btn-floating cyan" onclick="$('.tap-target').tapTarget('open')"><i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'magnify'"></i></a>
+</div>
+ Tap Target Structure 
+<div class="tap-target cyan" data-activates="menu">
+  <div class="tap-target-content white-text">
+    <h5>I am here</h5>
+    <p>Provide value and encourage return visits by introducing users to new features and functionality at contextually relevant moments.</p>
+  </div>
+</div> -->
+
+<!-- <form action="">
+  <div class="input-field col s12 l6">
+    <input type="text" id="first_name" class="validate">
+    <label for="first_name">First Name</label>
+  </div>
+  <div class="input-field col s12 l6">
+    <input type="text" id="last_name" class="validate">
+    <label for="last_name">Last Name</label>
+  </div>
+  <div class="input-field col s12">
+    <input type="email" id="email" class="validate">
+    <label for="email" data-error="wrong" data-success="right">Email</label>
+  </div>
+  <div class="input-field col s12">
+    <textarea id="textarea1" class="materialize-textarea"></textarea>
+    <label for="textarea1">Textarea</label>
+  </div>
+</form> -->
+
