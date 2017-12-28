@@ -154,3 +154,8 @@
     color: #D8000C;
     background-color: #FFD2D2;
 }
+
+body {
+  background-color: rgb(28, 53, 75);
+  background-repeat: repeat-y;
+}

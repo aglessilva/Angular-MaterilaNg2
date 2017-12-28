@@ -2,9 +2,10 @@ import { SearchCepService } from './services/search-cep.service';
 import { ApiUsuarioService } from './services/api-usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { LoaderService } from '../loader.service';
+import { MzToastService } from 'ng2-materialize';
 
 
 
@@ -24,12 +25,16 @@ export class CadastroComponent implements OnInit {
   private id: number;
   private descriptions: Subscription
 
+   ht: string = '<div class="row"><div class="col s12">teste ok</div></div>'
+
 
   constructor(
     private cepService: SearchCepService,
     private apiUsuarioService: ApiUsuarioService,
     private routeNavigate: ActivatedRoute,
     private loaderService: LoaderService,
+    private toastService: MzToastService,
+    private route: Router
   ) { }
 
 
@@ -64,22 +69,18 @@ export class CadastroComponent implements OnInit {
       this.apiUsuarioService.putUser(user)
       .toPromise()
       .then((response: Response) => {
-          console.log(response)
+        this.toastService.show(this.ht, 3000,'green z-depth-5');  
+        this.route.navigate(['/lista'])
       })
-      .catch((err: Error) => {
-        console.clear()
-          console.log(err.message)
-      })
+      .catch((err: Error) => alert('ERRO => ' + err.message));
       else
       this.apiUsuarioService.postUser(user)
-        .toPromise()
-        .then((response: Response) => {
-            console.log(response)
+      .toPromise()
+      .then((response: Response) => {
+        this.toastService.show('Inserido com sucesso', 3000,'red  z-depth-5');  
+        this.route.navigate(['/lista'])
         })
-        .catch((err: Error) => {
-          console.clear()
-            console.log(err.message)
-        })
+        .catch((err: Error) => alert('ERRO => ' + err.message));
       
   }
 

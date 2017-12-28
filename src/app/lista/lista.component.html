@@ -2,7 +2,7 @@
     <div class="col s12">
       <mz-input-container>
           <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'magnify'"></i>
-          <input  type="text" mz-input [label]="'Digite o nome do usuario para filtrar a lista...'" name="seachNome" [(ngModel)]="seachNome"
+          <input  type="text" mz-input [label]="'Digite o nome do usuario para filtrar a lista...'" name="seachNome" 
               [dataSuccess]="'ok'" id="seachNome-input" (keyup)=searchByName(nome.value) #nome>
       </mz-input-container>
   </div>
