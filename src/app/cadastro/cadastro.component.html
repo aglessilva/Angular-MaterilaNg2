@@ -1,11 +1,11 @@
 
-<form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario)" novalidate >
+<form  #f="ngForm" (ngSubmit)="validar(f)" novalidate >
     <div class="row">
         <fieldset style=" border-radius: 5px; width: 98%; margin: auto;">
             <div class="col s4">
                 <mz-input-container>
                     <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'magnify'"></i>
-                    <input mz-input [label]="'Buscar Cep'" name="seachCep" [(ngModel)]="f.seachCep" [validate]="true" [dataError]="'Esse campo contem caracteres invalidos'"
+                    <input mz-input  [label]="'Buscar Cep'" name="seachCep" [(ngModel)]="f.seachCep" [validate]="true" [dataError]="'Esse campo contem caracteres invalidos'"
                         [dataSuccess]="'ok'" id="seachCep-input" maxlength="8" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                         type="text" #seachCep>
                 </mz-input-container>
@@ -24,18 +24,29 @@
                 <div class="col s4">
                     
                     <mz-input-container>
-                        <input mz-input  mz-validation required
-                                [label]="'Nome'" name="nome" (ngModelChange)="mudou();" 
+                        <input mz-input 
+                                mz-validation required
+                                minlength="10"
+                                maxlength="100"
+                                [label]="'Nome'" 
+                                name="nome" (ngModelChange)="mudou();" 
                                 [(ngModel)]="contratoUsuario.usuario.nome" 
-                                [dataError]="'campo obrigatório'"
+                                [dataError]="'Campo Obrigatorio!'"
                                 [validate]="true" 
                                 id="nome-input" type="text">
+                               
                     </mz-input-container>
-                </div>
+                </div>  
                 <div class="col s4">
                     <mz-input-container>
-                        <input requerid type="email" mz-input [label]="'E-mail'" name="email" [(ngModel)]="contratoUsuario.usuario.email" [validate]="true" [dataError]="'este e-mail não é váldo'"
-                            [dataSuccess]="'ok'">
+                        <input 
+                            mz-input 
+                            required 
+                            type="email" 
+                            name="email" 
+                            [(ngModel)]="contratoUsuario.usuario.email" 
+                            [label]="'E-mail'" 
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                     </mz-input-container>
                 </div>
 
@@ -43,21 +54,39 @@
             <div class="row">
                 <div class="col s4">
                     <mz-input-container>
-                        <input type="text" requerid mz-input [label]="'Documento (RG, CPF)'" name="documento" [(ngModel)]="contratoUsuario.usuario.documento" [validate]="true"
-                            [dataError]="'campo obrigatório'" id="documento-input">
+                        <input 
+                            required
+                            mz-validation
+                            maxlength="11"
+                            minlength="11"
+                            type="text" 
+                            mz-input [label]="'Documento (RG, CPF)'" 
+                            pattern="[0-9]+" title="only letters" 
+                            name="documento" 
+                            [(ngModel)]="contratoUsuario.usuario.documento" 
+                                id="documento-input">
                     </mz-input-container>
                 </div>
                 <div class="col s4">
                     <mz-input-container>
-                        <input requerid mz-input  type="date"  placeholder="" 
-                        [label]="'Data de Nascimento'" name="dataNascimento" [(ngModel)]="contratoUsuario.usuario.dataNascimento "
-                            [validate]="true" [dataError]="'Data Invalida'"  />
+                        <input 
+                            requerid 
+                            mz-input  
+                            required
+                            type="text"  
+                            name="dataNascimento" 
+                            [(ngModel)]="contratoUsuario.usuario.dataNascimento "
+                            [label]="'Data de Nascimento'" />
                     </mz-input-container>
                     
                 </div>
                 <div class="col s4" style="margin-top:35px;">
                     <mz-switch-container>
-                        <input mz-switch name="sexo" [(ngModel)]="contratoUsuario.usuario.sexo" [off]="'Masculino'" [on]="'Ferminino'" type="checkbox">
+                        <input mz-switch name="sexo" 
+                        [(ngModel)]="contratoUsuario.usuario.sexo" 
+                        [off]="'Masculino'" 
+                        [on]="'Ferminino'" 
+                        type="checkbox">
                     </mz-switch-container>
                 </div>
             </div>
@@ -128,7 +157,7 @@
 
     <div class="row">
         <div class="col s2">
-            <button mz-button mz-icon-mdi size="'18px'" icon="content-save" type="submit">
+            <button mz-button mz-icon-mdi size="'18px'" icon="content-save" type="submit" >
                 Enviar
             </button>
         </div>
@@ -138,4 +167,5 @@
             </button>
         </div>
     </div>
+
 </form>

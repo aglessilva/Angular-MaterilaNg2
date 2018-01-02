@@ -5,7 +5,7 @@ import { NgForm, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { LoaderService } from '../loader.service';
-import { MzToastService } from 'ng2-materialize';
+import { MzToastService, ErrorMessageResource } from 'ng2-materialize';
 
 
 
@@ -14,16 +14,19 @@ import { MzToastService } from 'ng2-materialize';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./../app.component.css']
 })
+
+
 export class CadastroComponent implements OnInit {
 
   dateActual: number =  Date.now();
   objCep:  IEndereco = null;
   contratoUsuario:IContratoUsuario = { usuario: {} as IUsuario, enderecos: [] as Array<IEndereco>, endereco: {} as IEndereco } as IContratoUsuario;
   isOk: boolean =  true;
-  hasRow: boolean
+  hasRowErro: boolean[]=[]
   isChange: boolean;
   private id: number;
   private descriptions: Subscription
+  
 
    ht: string = '<div class="row"><div class="col s12">teste ok</div></div>'
 
@@ -35,7 +38,9 @@ export class CadastroComponent implements OnInit {
     private loaderService: LoaderService,
     private toastService: MzToastService,
     private route: Router
-  ) { }
+  ) { 
+   
+  }
 
 
 
@@ -52,10 +57,20 @@ export class CadastroComponent implements OnInit {
     this.descriptions.unsubscribe();
   }
 
-  postPutUser(_contratoUsuario: IContratoUsuario) {
+  validar(frm: NgForm)
+  {
+    debugger
+    frm.controls['nome']
+  }
+
+  postPutUser(_contratoUsuario: IContratoUsuario, frm: NgForm) {
     this.isChange = false;
     let user: IUsuario = {} as IUsuario
     let adress: Array<IEndereco> = [] 
+
+    console.log(frm)
+    if(1===1)
+    return;
 
     Object.assign( user, _contratoUsuario.usuario)
     adress =_contratoUsuario.enderecos
@@ -157,6 +172,17 @@ export class CadastroComponent implements OnInit {
   {
     this.isChange =  true;
   }
+}
+
+class ErroApps {
+  /**
+   *
+   */
+  constructor(
+    hasError: boolean,
+    msgBox: string
+  ) {}
+  
 }
 
 

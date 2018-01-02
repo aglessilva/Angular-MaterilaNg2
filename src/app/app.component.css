@@ -151,11 +151,9 @@
     background-color: #FEEFB3;
 }
 .isa_error {
-    color: #D8000C;
+    color: #a70810;
     background-color: #FFD2D2;
 }
 
-body {
-  background-color: rgb(28, 53, 75);
-  background-repeat: repeat-y;
-}
+
+
