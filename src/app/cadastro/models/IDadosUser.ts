@@ -20,7 +20,6 @@ interface IEndereco {
     cep: string;
     localidade: string;
     complemento: string;
-    uf: string;
     seachCep: string;
   }
 

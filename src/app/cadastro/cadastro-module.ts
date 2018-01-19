@@ -1,3 +1,5 @@
+import { CustumerMessageService } from './../alert-message/custumerMessage-service';
+import { AlertMessageComponent } from './../alert-message/alert-message.component';
 import { EnderecoComponent } from './endereco/endereco.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,7 +12,8 @@ import { SearchCepService } from './services/search-cep.service';
 import { CadastroRoutingModule } from './cadastro-routing-module';
 import { ApiUsuarioService } from './services/api-usuario.service';
 import { DependentesComponent } from './dependentes/dependentes.component';
-
+import { DocsPipe } from '../docs.pipe';
+import { FormatDocsDirective } from './directive/default-directive';
 
 
 @NgModule({
@@ -26,11 +29,15 @@ import { DependentesComponent } from './dependentes/dependentes.component';
         CadastroComponent,
         ListaComponent,
         EnderecoComponent,
-        DependentesComponent
+        DependentesComponent,
+        DocsPipe,
+        FormatDocsDirective,
+        AlertMessageComponent
     ],
     providers: [
         SearchCepService,
-        ApiUsuarioService
+        ApiUsuarioService,
+        CustumerMessageService
     ],
 })
 export class CadastroModule {}

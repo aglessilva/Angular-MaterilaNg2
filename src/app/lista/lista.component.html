@@ -24,7 +24,7 @@
       <tr class="fonte-default border-botton"  *ngFor="let itemUser of usuarios; let i =  index">
         <td>{{ itemUser.idUsuario }}</td>
         <td>{{ itemUser.nome }}</td>
-        <td>{{ itemUser.documento }}</td>
+        <td>{{ itemUser.documento | docs: '000.000.000-00'}}</td>
         <td>{{ itemUser.dataNascimento | date: 'dd/MM/yyyy'}}</td>
         <td>{{ itemUser.sexo == 'F' ? 'Ferminino' : 'Masculido' }}</td>
         <td>{{ itemUser.email }}</td>

@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { LoaderService } from '../loader.service';
 import { MzToastService, ErrorMessageResource } from 'ng2-materialize';
+import { NgModel } from '@angular/forms/src/directives/ng_model';
+import { FormatDocsDirective } from './directive/default-directive';
 
 
 
@@ -57,6 +59,24 @@ export class CadastroComponent implements OnInit {
     this.descriptions.unsubscribe();
   }
 
+ 
+  getErro(nome: NgModel): string
+  {
+    let msg: string = ''
+    if(nome.errors != null)
+    {
+      if(nome.errors["minlength"] )
+        msg = 'deve ter pelo menos 10 caracteres';
+      
+      if(nome.errors["required"])
+      msg = 'Este campo é obrigatorio';
+      
+      if(nome.errors["maxlength"])
+      msg = 'limite exedido';
+    }
+    return msg;
+  }
+
   validar(frm: NgForm)
   {
     debugger
@@ -68,6 +88,9 @@ export class CadastroComponent implements OnInit {
     let user: IUsuario = {} as IUsuario
     let adress: Array<IEndereco> = [] 
 
+    
+
+    
     console.log(frm)
     if(1===1)
     return;
@@ -108,15 +131,30 @@ export class CadastroComponent implements OnInit {
       delete res['$id'];
 
       res.enderecos.forEach((_endereco: IEndereco)=> {
-        this.contratoUsuario.enderecos.push(_endereco)
+        let newEnd: IEndereco  = {
+                        id:_endereco.id ,
+                        idUsuario: _endereco.idUsuario,
+                        bairro:_endereco.bairro.trim(),
+                        logradouro: _endereco.logradouro.trim(),
+                        cep: _endereco.cep.trim(),
+                        localidade: _endereco.localidade.trim(),
+                        complemento: _endereco.complemento.trim(),
+                      } as IEndereco
+        this.contratoUsuario.enderecos.push(newEnd)
         
       });
       delete res['enderecos']
-      this.contratoUsuario.usuario = res as IUsuario
-      if(res.sexo === 'F')
-        this.contratoUsuario.usuario.sexo = true 
-      else
-        this.contratoUsuario.usuario.sexo = false
+      this.contratoUsuario.usuario = {
+            idUsuario: res.idUsuario,
+            nome: res.nome.trim(),
+            documento: res.documento.trim(),
+            dataNascimento: res.dataNascimento.trim(),
+            sexo: res.sexo === 'F' ? true : false,
+            email: res.email.trim(),
+            login: res.login.trim(),
+            senha: res.senha.trim(),
+            isAuthentication: res.isAuthentication
+            } as IUsuario
     })
   } 
 
@@ -141,7 +179,6 @@ export class CadastroComponent implements OnInit {
           logradouro: this.objCep.logradouro,
           cep: this.objCep.cep,
           bairro: this.objCep.bairro,
-          uf: this.objCep.uf,
           dataNascimento: new Date().toISOString()
         }
     });

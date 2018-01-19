@@ -1,3 +1,18 @@
 <p>
   dependentes works!
 </p>
+
+<app-alert-message #mdl 
+    (onYes)="apertouSim()" 
+    (onNo)="apertouNao();" 
+    [yesOrNo]="true"
+    [message]="{title:'ola mundo', textBody:corpo}"></app-alert-message>
+
+<button mz-button mz-icon-mdi size="'18px'" icon="content-save"  (click)="mdl.openModal();" >
+    abrir modal
+</button>
+
+
+
+  <!-- Modal Trigger -->
+  <button data-target="modal1" class="btn modal-trigger">Modal</button>

@@ -27,14 +27,16 @@
                         <input mz-input 
                                 mz-validation required
                                 minlength="10"
-                                maxlength="100"
+                                maxlength="20"
                                 [label]="'Nome'" 
                                 name="nome" (ngModelChange)="mudou();" 
                                 [(ngModel)]="contratoUsuario.usuario.nome" 
-                                [dataError]="'Campo Obrigatorio!'"
+                                #nome = "ngModel"
+                                [dataError]=" getErro(nome) "
+                                [dataSuccess]="'ok'"
                                 [validate]="true" 
                                 id="nome-input" type="text">
-                               
+                              
                     </mz-input-container>
                 </div>  
                 <div class="col s4">
@@ -42,9 +44,13 @@
                         <input 
                             mz-input 
                             required 
+                            mz-validation
                             type="email" 
                             name="email" 
                             [(ngModel)]="contratoUsuario.usuario.email" 
+                            [validate]="true" 
+                            [dataError]="' Email invalido'"
+                            [dataSuccess]="'ok'"
                             [label]="'E-mail'" 
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                     </mz-input-container>
@@ -55,17 +61,17 @@
                 <div class="col s4">
                     <mz-input-container>
                         <input 
+                            mz-input 
                             required
-                            mz-validation
-                            maxlength="11"
-                            minlength="11"
+                            [dataSuccess]="'ok'"
+                            formatDoc = "99-99/99|999.99(99)"
                             type="text" 
-                            mz-input [label]="'Documento (RG, CPF)'" 
-                            pattern="[0-9]+" title="only letters" 
+                            [label]="'Documento (RG, CPF, CNPJ)'" 
                             name="documento" 
                             [(ngModel)]="contratoUsuario.usuario.documento" 
-                                id="documento-input">
+                            id="documento-input" >
                     </mz-input-container>
+                    
                 </div>
                 <div class="col s4">
                     <mz-input-container>
@@ -73,6 +79,7 @@
                             requerid 
                             mz-input  
                             required
+                            data-mask="00/00/0000"
                             type="text"  
                             name="dataNascimento" 
                             [(ngModel)]="contratoUsuario.usuario.dataNascimento "
