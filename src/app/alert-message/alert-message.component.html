@@ -1,40 +1,18 @@
-<div id="id01" class="w3-modal">
-    <div class="w3-modal-content  w3-animate-top" style="border-radius: 10px !important;">
-        <header class=" w3-red">
-            <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-            <h3>{{ message.title }}</h3>
-        </header>
-        <div class="w3-container">
-           {{ message.textBody }}
-        </div>
-        <footer class="w3-container w3-red">
-            <div class="row" style="margin-bottom:1px !important;">
-                <div  [ngClass]="{'col s5 offset-s7' : yesOrNo, 'col s2 offset-s10' : !yesOrNo}" >
-                    <button [hidden]="!yesOrNo" mz-button mz-icon-mdi size="'18px'" icon="check" [flat]="true" (click)="actYes()">Sim</button>
-                    <button [hidden]="!yesOrNo" mz-button mz-icon-mdi size="'18px'" icon="close-outline" [flat]="true" (click)="actNo()">Não</button>
-                    <button mz-button mz-icon-mdi size="'18px'" icon="close" [flat]="true"  onclick="document.getElementById('id01').style.display='none'" >Fechar</button>
-                </div>
-            </div>
-        </footer>
-    </div>
-</div>
-
-
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer" style="border: 1px solid, rgb(0, 0, 0); border-radius: 10px;">
-      <header class="w3-container  w3-red" >
-          <h2>titulo da janela</h2>
-      </header>
-        <div class="modal-content">
-            {{ message.textBody }}
-        </div>
-        <div class="modal-footer">
-            <button [hidden]="!yesOrNo" mz-button mz-icon-mdi size="'18px'" icon="check" [flat]="true" (click)="actYes()">Sim</button>
-            <button [hidden]="!yesOrNo" mz-button mz-icon-mdi size="'18px'" icon="close-outline" [flat]="true" (click)="actNo()">Não</button>
-            <button mz-button mz-icon-mdi size="'18px'" icon="close" [flat]="true"  onclick="$('#modal1').modal('close');" >Fechar</button>
-        </div>
+ <!-- Modal Trigger -->
+ <div id="modal1" class="modal" style=" overflow: hidden; border-radius:10px;">
+   <div style=" font-size: 20px ;padding-top: 10px; padding-left: 20px; font-weight: bold; color: rgb(160, 20, 20);">
+      {{ message.title }}
+        <hr>
+   </div>
+   <div class="modal-content">
+        {{ message.textBody }}
+   </div>
+   <div class="modal-footer">
+            <button [hidden]="!yesOrNo" mz-button mz-icon-mdi class="modal-action modal-close" size="'18px'" icon="check" [flat]="true" (click)="actYes()">Sim</button>
+            <button [hidden]="!yesOrNo" mz-button mz-icon-mdi class="modal-action modal-close" size="'18px'" icon="close-outline" [flat]="true" (click)="actNo()">Não</button>
+            <button mz-button mz-icon-mdi size="'18px'" icon="close"  class="modal-action modal-close waves-effect waves-green btn-flat" >Fechar</button>
+   </div>
  </div>
 
- 
- <button type="button" class="btn btn-large btn-block btn-default" (click)="openModal();">Abrir</button>
+
  

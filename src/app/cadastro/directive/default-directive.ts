@@ -13,8 +13,8 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor,  } from '@angular/forms';
 export class FormatDocsDirective implements ControlValueAccessor {
 
     constructor(
-       
-        private elementRef: ElementRef) { }
+       private elementRef: ElementRef
+    ) { }
 
     onChange: any;
     onTouched: any;
