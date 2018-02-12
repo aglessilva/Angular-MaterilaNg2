@@ -1,12 +1,14 @@
 <div class="row">
     <div class="col s12">
+      <form #frm="ngForm">
       <mz-input-container>
           <i mz-icon-mdi mz-input-prefix mz-tooltip tooltip="Listar Todos!"  
           style="cursor: pointer;" [size]="'24px'" [icon]="'magnify'" 
-          (click)="getUser();nome.value='';"></i>
-          <input  type="text" mz-input [label]="'Digite o nome do usuario para filtrar a lista...'" name="seachNome" 
-              [dataSuccess]="'ok'" id="seachNome-input" (keyup)=searchByName(nome.value) #nome>
+          (click)="getUser();frm.reset();"></i>
+          <input  type="text" mz-input [label]="'Digite o nome do usuario para filtrar a lista...'" name="seachNome" [(ngModel)] = "seachNome"
+              [dataSuccess]="'ok'" id="seachNome-input" (keyup)=searchByName(seachNome) #nome>
       </mz-input-container>
+    </form>
   </div>
 </div>
 <fieldset style="border-radius: 5px; width: 99%; margin: auto;">
@@ -32,9 +34,14 @@
         <td>{{ itemUser.email }}</td>
         <td class="red-text">
             <i mz-icon-mdi mz-tooltip tooltip="Editar registro" [position]="'top'" [align]="'center'" [icon]="'pencil-circle-outline'" class="link" [routerLink]="['/cadastro']" [queryParams]="{id:itemUser.idUsuario}"></i>
-            <i mz-icon-mdi mz-tooltip tooltip="Remover registro" [position]="'top'" [align]="'center'" [icon]="'minus-circle-outline'" class="link" (click)="deleteUser(itemUser.idUsuario, i)"></i>
+            <i mz-icon-mdi mz-tooltip tooltip="Remover registro" [position]="'top'" [align]="'center'" [icon]="'minus-circle-outline'" class="link" (click)="mdl.modalOpen(); mdl.params = {'id':itemUser.idUsuario, 'indice':i}"></i>
         </td>
       </tr>
     </tbody>
   </table>  
 </fieldset>
+<app-alert-message 
+    (onYes)="apertouSim($event)"  
+    [yesOrNo]="true"
+    [message]="{title:'Treinamento de Angular', textBody:'Deseja Exluir este registro?'}" #mdl>
+</app-alert-message>

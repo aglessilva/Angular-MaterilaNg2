@@ -104,19 +104,25 @@ export class CadastroComponent implements OnInit {
         .toPromise()
         .then((response: Response) => {
 
+        if(!this.isOk)
+        {
           if(adress.id === 0 || adress.id ===  undefined)
             retornoApi = this.apiUsuarioService.postEnderecoUserById(adress)
           else
             retornoApi = this.apiUsuarioService.putEnderecoUserById(adress)
 
-          retornoApi.toPromise()
-            .then(() => {
-              this.toastService.show("Atualizado com Sucesso!", 3000,'green z-depth-5');  
-              this.route.navigate(['/lista'])
+            retornoApi.toPromise()
+            .then((resp:Response) => {
+              this.toastService.show("Endereço atualizado com Sucesso!", 3000,'green z-depth-5') 
             })
             .catch((err: Error) => alert('ERRO => ' + err.message))
+          }
+          
+          this.toastService.show("Dados atualizado com Sucesso!", 3000,'blue z-depth-5');  
+          this.route.navigate(['/lista'])
         })
         .catch((err: Error) => alert('ERRO => ' + err.message));
+        
       else
       this.apiUsuarioService.postUser(user)
         .toPromise()
@@ -141,11 +147,11 @@ export class CadastroComponent implements OnInit {
           let newEnd: IEndereco  = {
                           id:_endereco.id ,
                           idUsuario: _endereco.idUsuario,
-                          bairro:_endereco.bairro.trim(),
-                          logradouro: _endereco.logradouro.trim(),
-                          cep: _endereco.cep.trim(),
-                          localidade: _endereco.localidade.trim(),
-                          complemento: _endereco.complemento.trim(),
+                          bairro: _endereco.bairro == null ? '' : _endereco.bairro.trim(),
+                          logradouro: _endereco.logradouro  == null  ? '' : _endereco.logradouro.trim(),
+                          cep: _endereco.cep  == null ? '' : _endereco.cep.trim(),
+                          localidade:  _endereco.localidade  == null ? '' : _endereco.localidade.trim(),
+                          complemento:  _endereco.complemento  == null ? '' : _endereco.complemento.trim(),
                         } as IEndereco
           this.contratoUsuario.enderecos.push(newEnd)
       });
