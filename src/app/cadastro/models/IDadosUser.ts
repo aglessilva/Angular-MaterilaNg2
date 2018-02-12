@@ -28,3 +28,4 @@ interface IContratoUsuario {
       enderecos: Array<IEndereco>;
       endereco: IEndereco;
   }
+

@@ -47,8 +47,16 @@ export class ApiUsuarioService {
     return this.http.post('http://localhost:8080/webApi/api/Usuarios/filter', JSON.stringify(user),{ headers : this.heders });
   }
 
-  deleteEnderecoUserById(_idUser: string): Observable<object> { 
+  deleteEnderecoUserById(_idUser: string) { 
     return this.http.delete('http://localhost:8080/webApi/api/Endereco/' +_idUser, { headers: this.heders } );
+  }
+
+  postEnderecoUserById(_endereco: IEndereco) { 
+    return this.http.post('http://localhost:8080/webApi/api/Endereco/',JSON.stringify(_endereco), { headers: this.heders } );
+  }
+
+  putEnderecoUserById(_endereco: IEndereco){ 
+    return this.http.put('http://localhost:8080/webApi/api/Endereco/'+ _endereco.id ,JSON.stringify(_endereco), { headers: this.heders } );
   }
 
   deleteUserById(_idUser: string)

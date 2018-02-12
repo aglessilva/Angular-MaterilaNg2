@@ -22,11 +22,10 @@ export class FormatDocsDirective implements ControlValueAccessor {
     @Input('formatDoc') formatDoc:  string
 
     writeValue(obj: any): void {
+        
         if (obj) {
-            if (!isNaN(obj)) 
-            {
-              this.elementRef.nativeElement.value = this.formataDoc(String(obj));
-            }
+            let valor = obj.replace(/\D/g, '');
+            this.elementRef.nativeElement.value = this.formataDoc(String(valor));
         }
 }
     registerOnChange(fn: any): void {
@@ -72,7 +71,6 @@ export class FormatDocsDirective implements ControlValueAccessor {
         if (valor.indexOf('_') > -1) {
           valor = valor.substr(0, valor.indexOf('_'));
         }
-     
         $event.target.value = valor;
       }
 
@@ -109,7 +107,6 @@ export class FormatDocsDirective implements ControlValueAccessor {
 
     formataDoc(valor: string): string
     {
-        debugger
         let valorMaskPos = 0;
         let pad =  ''
         let w: number = 0

@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col s12">
       <mz-input-container>
-          <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'magnify'"></i>
+          <i mz-icon-mdi mz-input-prefix mz-tooltip tooltip="Listar Todos!"  
+          style="cursor: pointer;" [size]="'24px'" [icon]="'magnify'" 
+          (click)="getUser();nome.value='';"></i>
           <input  type="text" mz-input [label]="'Digite o nome do usuario para filtrar a lista...'" name="seachNome" 
               [dataSuccess]="'ok'" id="seachNome-input" (keyup)=searchByName(nome.value) #nome>
       </mz-input-container>

@@ -8,6 +8,7 @@ import { LoaderService } from '../loader.service';
 import { MzToastService, ErrorMessageResource } from 'ng2-materialize';
 import { NgModel } from '@angular/forms/src/directives/ng_model';
 import { FormatDocsDirective } from './directive/default-directive';
+import { Observable } from 'rxjs/Observable';
 
 
 
@@ -26,13 +27,11 @@ export class CadastroComponent implements OnInit {
   isOk: boolean =  true;
   hasRowErro: boolean[]=[]
   isChange: boolean;
+  contextItem: object 
+  
   private id: number;
   private descriptions: Subscription
   
-
-   ht: string = '<div class="row"><div class="col s12">teste ok</div></div>'
-
-
   constructor(
     private cepService: SearchCepService,
     private apiUsuarioService: ApiUsuarioService,
@@ -83,20 +82,17 @@ export class CadastroComponent implements OnInit {
     frm.controls['nome']
   }
 
-  postPutUser(_contratoUsuario: IContratoUsuario, frm: NgForm) {
+  postPutUser(_contratoUsuario: IContratoUsuario) {
     this.isChange = false;
     let user: IUsuario = {} as IUsuario
-    let adress: Array<IEndereco> = [] 
-
-    
-
-    
-    console.log(frm)
-    if(1===1)
-    return;
+    let adress: IEndereco = {} as IEndereco 
+    let retornoApi: Observable<Object>
 
     Object.assign( user, _contratoUsuario.usuario)
-    adress =_contratoUsuario.enderecos
+    let dt = _contratoUsuario.usuario.dataNascimento.split('/')
+    user.dataNascimento = dt[2]+'-'+dt[1]+'-'+dt[0]
+    adress =_contratoUsuario.endereco
+    adress.idUsuario =  user.idUsuario
 
       if(_contratoUsuario.usuario.sexo)
         user.sexo = 'F'
@@ -104,21 +100,31 @@ export class CadastroComponent implements OnInit {
         user.sexo = 'M' 
     
      if(user.idUsuario > 0) 
-      this.apiUsuarioService.putUser(user)
-      .toPromise()
-      .then((response: Response) => {
-        this.toastService.show(this.ht, 3000,'green z-depth-5');  
-        this.route.navigate(['/lista'])
-      })
-      .catch((err: Error) => alert('ERRO => ' + err.message));
-      else
-      this.apiUsuarioService.postUser(user)
-      .toPromise()
-      .then((response: Response) => {
-        this.toastService.show('Inserido com sucesso', 3000,'red  z-depth-5');  
-        this.route.navigate(['/lista'])
+        this.apiUsuarioService.putUser(user)
+        .toPromise()
+        .then((response: Response) => {
+
+          if(adress.id === 0 || adress.id ===  undefined)
+            retornoApi = this.apiUsuarioService.postEnderecoUserById(adress)
+          else
+            retornoApi = this.apiUsuarioService.putEnderecoUserById(adress)
+
+          retornoApi.toPromise()
+            .then(() => {
+              this.toastService.show("Atualizado com Sucesso!", 3000,'green z-depth-5');  
+              this.route.navigate(['/lista'])
+            })
+            .catch((err: Error) => alert('ERRO => ' + err.message))
         })
         .catch((err: Error) => alert('ERRO => ' + err.message));
+      else
+      this.apiUsuarioService.postUser(user)
+        .toPromise()
+        .then((response: Response) => {
+          this.toastService.show('Inserido com sucesso', 3000,'red  z-depth-5');  
+          this.route.navigate(['/lista'])
+          })
+          .catch((err: Error) => alert('ERRO => ' + err.message));
       
   }
 
@@ -129,30 +135,31 @@ export class CadastroComponent implements OnInit {
     .then((res: any) => {
       this.isOk = true
       delete res['$id'];
-
-      res.enderecos.forEach((_endereco: IEndereco)=> {
-        let newEnd: IEndereco  = {
-                        id:_endereco.id ,
-                        idUsuario: _endereco.idUsuario,
-                        bairro:_endereco.bairro.trim(),
-                        logradouro: _endereco.logradouro.trim(),
-                        cep: _endereco.cep.trim(),
-                        localidade: _endereco.localidade.trim(),
-                        complemento: _endereco.complemento.trim(),
-                      } as IEndereco
-        this.contratoUsuario.enderecos.push(newEnd)
-        
+      if(res.enderecos.length > 0)
+      {
+        res.enderecos.forEach((_endereco: IEndereco)=> {
+          let newEnd: IEndereco  = {
+                          id:_endereco.id ,
+                          idUsuario: _endereco.idUsuario,
+                          bairro:_endereco.bairro.trim(),
+                          logradouro: _endereco.logradouro.trim(),
+                          cep: _endereco.cep.trim(),
+                          localidade: _endereco.localidade.trim(),
+                          complemento: _endereco.complemento.trim(),
+                        } as IEndereco
+          this.contratoUsuario.enderecos.push(newEnd)
       });
+    }
       delete res['enderecos']
       this.contratoUsuario.usuario = {
             idUsuario: res.idUsuario,
             nome: res.nome.trim(),
             documento: res.documento.trim(),
-            dataNascimento: res.dataNascimento.trim(),
+            dataNascimento: new Date(res.dataNascimento).toLocaleDateString(),
             sexo: res.sexo === 'F' ? true : false,
-            email: res.email.trim(),
-            login: res.login.trim(),
-            senha: res.senha.trim(),
+            email: res.email,
+            login: res.login,
+            senha: res.senha,
             isAuthentication: res.isAuthentication
             } as IUsuario
     })
@@ -195,14 +202,22 @@ export class CadastroComponent implements OnInit {
     this.loaderService.display(true)    
     this.apiUsuarioService.deleteEnderecoUserById(_id)
     .toPromise()
-    .then(() => {
+    .then((response: Response | IEndereco) => {
+      
+      this.toastService.show("Excluido com sucesso!", 3000,'red z-depth-5');  
       this.contratoUsuario.enderecos.splice(indice,1);
       this.loaderService.display(false)
     })
     .catch((err:Error) => {
       this.loaderService.display(false)
+      console.clear()
       console.log(err.message);
     })
+  }
+
+  apertouSim(obj: any)
+  {
+    this.deleteEndereco(obj.id, obj.indice)
   }
 
   mudou()

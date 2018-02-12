@@ -1,5 +1,5 @@
 
-<form  #f="ngForm" (ngSubmit)="validar(f)" novalidate >
+<form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario)" novalidate >
     <div class="row">
         <fieldset style=" border-radius: 5px; width: 98%; margin: auto;">
             <div class="col s4">
@@ -64,7 +64,7 @@
                             mz-input 
                             required
                             [dataSuccess]="'ok'"
-                            formatDoc = "99-99/99|999.99(99)"
+                            formatDoc = "999.999.999-99"
                             type="text" 
                             [label]="'Documento (RG, CPF, CNPJ)'" 
                             name="documento" 
@@ -76,13 +76,13 @@
                 <div class="col s4">
                     <mz-input-container>
                         <input 
-                            requerid 
                             mz-input  
                             required
-                            data-mask="00/00/0000"
+                            formatDoc = "99/99/9999"
                             type="text"  
                             name="dataNascimento" 
-                            [(ngModel)]="contratoUsuario.usuario.dataNascimento "
+                            id="dataNascimento-input" 
+                            [(ngModel)]="contratoUsuario.usuario.dataNascimento"
                             [label]="'Data de Nascimento'" />
                     </mz-input-container>
                     
@@ -104,8 +104,8 @@
                             <div class="col s4">
                                 <mz-input-container>
                                     <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'map-marker'"></i>
-                                    
-                                    <input mz-input [label]="'Cep'" name="cep" [(ngModel)]="contratoUsuario.endereco.cep" (ngModelChange)="mudou();" id="cep-input" length="150" type="text">
+                                      <input type="hidden" name="id" [(ngModel)]="contratoUsuario.endereco.id">  
+                                      <input mz-input [label]="'Cep'" name="cep" [(ngModel)]="contratoUsuario.endereco.cep" (ngModelChange)="mudou();" id="cep-input" length="150" type="text">
                                 </mz-input-container>
                             </div>
                             <div class="col s4">
@@ -148,14 +148,15 @@
                         </div>
                     </div>
             </fieldset>
+           
                 <div class="row fonte-default border-botton" style="padding: 2px !important;  width: 97%; margin: 5px 5px 5px 5px;" *ngFor="let item of contratoUsuario.enderecos; let i = index;">
                     <div class="col s3">{{ item.bairro }}</div>
                     <div class="col s3">{{ item.logradouro }}</div>
                     <div class="col s2">{{ item.cep }}</div>
                     <div class="col s2">{{ item.localidade }}</div>
                     <div class="col s2 red-text">
-                            <i mz-icon-mdi mz-tooltip tooltip="Editar registro" [position]="'top'" [align]="'center'" [icon]="'pencil-circle-outline'" class="link" (click)="editAddress(0)"></i>
-                            <i mz-icon-mdi mz-tooltip tooltip="Remover registro" [position]="'top'" [align]="'center'" [icon]="'minus-circle-outline'" class="link" (click)="deleteEndereco(item.id, i)"></i>
+                            <i mz-icon-mdi mz-tooltip tooltip="Editar registro" [position]="'top'" [align]="'center'" [icon]="'pencil-circle-outline'" class="link" (click)="editAddress(i)"></i>
+                            <i mz-icon-mdi mz-tooltip tooltip="Remover registro" [position]="'top'" [align]="'center'" [icon]="'minus-circle-outline'" class="link" (click)="mdl.modalOpen(); mdl.params = {'id':item.id, 'indice':i}"></i>
                     </div>
                 </div>
         </fieldset>
@@ -176,3 +177,9 @@
     </div>
 
 </form>
+
+<app-alert-message 
+    (onYes)="apertouSim($event)"  
+    [yesOrNo]="true"
+    [message]="{title:'Treinamento de Angular', textBody:'Deseja Exluir este registro?'}" #mdl>
+</app-alert-message>

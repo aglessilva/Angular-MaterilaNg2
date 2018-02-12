@@ -1,19 +1,19 @@
-<div class="row body" style="width: 50%; margin: auto; border:1px solid #cccccc; border-radius: 10px;margin-top: 100px;">
+<div class="row body" style="width: 40%; margin: auto; border:1px solid #cccccc; border-radius: 10px;margin-top: 100px;">
     <form #f="ngForm" (ngSubmit)="loginUser(f.value)" class="col s12" novalidate>
-      <div class="row">
-        <div class="input-field col s12">
+      <div class="row" style="margin: auto;">
+        <div class="input-field col s10">
             <i mz-icon-mdi mz-input-prefix  [size]="'24px'" [icon]="'account'"></i>
           <input mz-input required id="icon_prefix" type="text" class="validate" name="login" maxlength="5" [(ngModel)]="f.login">
-          <label for="icon_prefix">Usuario</label>
+          <label for="icon_prefix">Usuário</label>
         </div>
-        <div class="input-field col s12">
+        <div class="input-field col s10">
             <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'magnify'"></i>
           <input required id="icon_telephone" type="password" name="senha" [(ngModel)]="f.senha"  class="validate">
           <label for="icon_telephone">Senha</label>
         </div>
       </div>      
           <div class="row"> 
-            <div class="col s6 offset-s1">
+            <div class="col s6 offset-s3">
               <button mz-button mz-icon-mdi size="'18px'" [disabled]="!f.valid" icon="content-save" type="submit">
                 Enviar
               </button>

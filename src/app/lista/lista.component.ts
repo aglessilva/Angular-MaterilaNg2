@@ -38,6 +38,7 @@ export class ListaComponent implements OnInit {
   searchByName(_name: string)
   {
     if(_name.length < 3) return;
+    debugger
     this.loaderService.display(true);
     this.usuarios = new Array();
     let usuario: IUsuario = { idUsuario: 0 ,nome: _name ,documento: '' ,dataNascimento: '',sexo: '',email: ''} as IUsuario ;
@@ -80,6 +81,7 @@ export class ListaComponent implements OnInit {
     this.apiUsuarioService.deleteUserById(_id)
     .toPromise()
     .then((response: Response | IUsuario) => {
+        alert('ok');
         this.usuarios.splice(indice, 1);
     })
     .catch((err: Error) => {
