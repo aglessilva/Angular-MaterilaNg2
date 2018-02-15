@@ -4,9 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http/src/static_response';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { LoaderService } from '../loader.service';
-import { NgForm } from '@angular/forms';
-import { MzToastService } from 'ng2-materialize';
-
 
 @Component({
   selector: 'app-lista',
@@ -19,7 +16,10 @@ export class ListaComponent implements OnInit {
     private apiUsuarioService: ApiUsuarioService,
     private loaderService: LoaderService,
     private routeNavigate: ActivatedRoute,
+<<<<<<< HEAD
     private toastService: MzToastService,
+=======
+>>>>>>> parent of 09f6273... HAS -> ajuste das funcionalidade de exclusão de registro e de filtros de pesquisa
   )
      { }
 
@@ -39,14 +39,18 @@ export class ListaComponent implements OnInit {
     this.getUser()
   }
 
-
   searchByName(_name: string)
   {
+<<<<<<< HEAD
    // if(_name.length < 3) return;
 
+=======
+    if(_name.length < 3) return;
+    debugger
+>>>>>>> parent of 09f6273... HAS -> ajuste das funcionalidade de exclusão de registro e de filtros de pesquisa
     this.loaderService.display(true);
     this.usuarios = new Array();
-    let usuario: IUsuario = { idUsuario: 0 ,nome: _name ,documento:_name ,dataNascimento: _name,sexo: _name,email: _name} as IUsuario ;
+    let usuario: IUsuario = { idUsuario: 0 ,nome: _name ,documento: '' ,dataNascimento: '',sexo: '',email: ''} as IUsuario ;
     this.apiUsuarioService.getUserByName(usuario)
     .toPromise()
     .then((res: Array<IUsuario>) => {
@@ -86,17 +90,12 @@ export class ListaComponent implements OnInit {
     this.apiUsuarioService.deleteUserById(_id)
     .toPromise()
     .then((response: Response | IUsuario) => {
-      this.toastService.show("Excluido com sucesso!", 3000,'yellow z-depth-5');  ;
+        alert('ok');
         this.usuarios.splice(indice, 1);
     })
     .catch((err: Error) => {
       console.error(err);
     })
-  }
-
-  apertouSim(item: any)
-  {
-    this.deleteUser(item.id, item.indice);
   }
 
 }
