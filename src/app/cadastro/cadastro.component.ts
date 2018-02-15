@@ -2,9 +2,13 @@ import { SearchCepService } from './services/search-cep.service';
 import { ApiUsuarioService } from './services/api-usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { LoaderService } from '../loader.service';
+import { MzToastService, ErrorMessageResource } from 'ng2-materialize';
+import { NgModel } from '@angular/forms/src/directives/ng_model';
+import { FormatDocsDirective } from './directive/default-directive';
+import { Observable } from 'rxjs/Observable';
 
 
 
@@ -13,26 +17,31 @@ import { LoaderService } from '../loader.service';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./../app.component.css']
 })
+
+
 export class CadastroComponent implements OnInit {
 
   dateActual: number =  Date.now();
   objCep:  IEndereco = null;
   contratoUsuario:IContratoUsuario = { usuario: {} as IUsuario, enderecos: [] as Array<IEndereco>, endereco: {} as IEndereco } as IContratoUsuario;
   isOk: boolean =  true;
-  hasRow: boolean
+  hasRowErro: boolean[]=[]
   isChange: boolean;
+  contextItem: object 
+  
   private id: number;
   private descriptions: Subscription
-
-
+  
   constructor(
     private cepService: SearchCepService,
     private apiUsuarioService: ApiUsuarioService,
     private routeNavigate: ActivatedRoute,
     private loaderService: LoaderService,
-  ) { }
-
-
+    private toastService: MzToastService,
+    private route: Router
+  ) { 
+   
+  }
 
   ngOnInit() {
     this.descriptions =  this.routeNavigate.queryParams.subscribe(
@@ -42,18 +51,58 @@ export class CadastroComponent implements OnInit {
         this.getUserById(this.id);
       }
     )
+
+    this.contratoUsuario.usuario = {
+      idUsuario: 0
+      ,nome: ''
+      ,documento: ''
+      ,dataNascimento: ''
+      ,sexo: ''
+      ,email: ''
+      ,login: ''
+      ,senha: ''
+      ,isAuthentication: false
+    } as IUsuario
   }
   ngOnDestroy() {
     this.descriptions.unsubscribe();
   }
 
-  postPutUser(_contratoUsuario: IContratoUsuario) {
+ 
+  getErro(nome: NgModel): string
+  {
+    let msg: string = ''
+    if(nome.errors != null)
+    {
+      if(nome.errors["minlength"] )
+        msg = 'deve ter pelo menos 10 caracteres';
+      
+      if(nome.errors["required"])
+      msg = 'Este campo é obrigatorio';
+      
+      if(nome.errors["maxlength"])
+      msg = 'limite exedido';
+    }
+    return msg;
+  }
+
+  validar(frm: NgForm)
+  {
+    debugger
+    frm.controls['nome']
+  }
+
+  postPutUser(_contratoUsuario: IContratoUsuario, frm: NgForm) {
     this.isChange = false;
     let user: IUsuario = {} as IUsuario
-    let adress: Array<IEndereco> = [] 
-
+    let adress: IEndereco = {} as IEndereco 
+    let retornoApi: Observable<Object>
+debugger
     Object.assign( user, _contratoUsuario.usuario)
-    adress =_contratoUsuario.enderecos
+    let dt = _contratoUsuario.usuario.dataNascimento.split('/')
+    user.dataNascimento = dt[2]+'-'+dt[1]+'-'+dt[0]
+    adress =_contratoUsuario.endereco
+    adress.idUsuario =  user.idUsuario
 
       if(_contratoUsuario.usuario.sexo)
         user.sexo = 'F'
@@ -61,25 +110,38 @@ export class CadastroComponent implements OnInit {
         user.sexo = 'M' 
     
      if(user.idUsuario > 0) 
-      this.apiUsuarioService.putUser(user)
-      .toPromise()
-      .then((response: Response) => {
-          console.log(response)
-      })
-      .catch((err: Error) => {
-        console.clear()
-          console.log(err.message)
-      })
+        this.apiUsuarioService.putUser(user)
+        .toPromise()
+        .then((response: Response) => {
+
+        if(!this.isOk)
+        {
+          if(adress.id === 0 || adress.id ===  undefined)
+            retornoApi = this.apiUsuarioService.postEnderecoUserById(adress)
+          else
+            retornoApi = this.apiUsuarioService.putEnderecoUserById(adress)
+
+            retornoApi.toPromise()
+            .then((resp:Response) => {
+              this.toastService.show("Endereço atualizado com Sucesso!", 3000,'green z-depth-5') 
+            })
+            .catch((err: Error) => alert('ERRO => ' + err.message))
+        }
+          
+          this.toastService.show("Dados atualizado com Sucesso!", 3000,'blue z-depth-5');  
+          this.route.navigate(['/lista'])
+        })
+        .catch((err: Error) =>{ alert('ERRO => ' + err.message)
+      console.log(err)});
+        
       else
       this.apiUsuarioService.postUser(user)
         .toPromise()
         .then((response: Response) => {
-            console.log(response)
-        })
-        .catch((err: Error) => {
-          console.clear()
-            console.log(err.message)
-        })
+          this.toastService.show('Inserido com sucesso', 3000,'red  z-depth-5');  
+          this.route.navigate(['/lista'])
+          })
+          .catch((err: Error) => alert('ERRO => ' + err.message));
       
   }
 
@@ -90,17 +152,33 @@ export class CadastroComponent implements OnInit {
     .then((res: any) => {
       this.isOk = true
       delete res['$id'];
-
-      res.enderecos.forEach((_endereco: IEndereco)=> {
-        this.contratoUsuario.enderecos.push(_endereco)
-        
+      if(res.enderecos.length > 0)
+      {
+        res.enderecos.forEach((_endereco: IEndereco)=> {
+          let newEnd: IEndereco  = {
+                          id:_endereco.id ,
+                          idUsuario: _endereco.idUsuario,
+                          bairro: _endereco.bairro == null ? '' : _endereco.bairro.trim(),
+                          logradouro: _endereco.logradouro  == null  ? '' : _endereco.logradouro.trim(),
+                          cep: _endereco.cep  == null ? '' : _endereco.cep.trim(),
+                          localidade:  _endereco.localidade  == null ? '' : _endereco.localidade.trim(),
+                          complemento:  _endereco.complemento  == null ? '' : _endereco.complemento.trim(),
+                        } as IEndereco
+          this.contratoUsuario.enderecos.push(newEnd)
       });
+    }
       delete res['enderecos']
-      this.contratoUsuario.usuario = res as IUsuario
-      if(res.sexo === 'F')
-        this.contratoUsuario.usuario.sexo = true 
-      else
-        this.contratoUsuario.usuario.sexo = false
+      this.contratoUsuario.usuario = {
+            idUsuario: res.idUsuario,
+            nome: res.nome.trim(),
+            documento: res.documento.trim(),
+            dataNascimento: new Date(res.dataNascimento).toLocaleDateString(),
+            sexo: res.sexo === 'F' ? true : false,
+            email: res.email,
+            login: res.login,
+            senha: res.senha,
+            isAuthentication: res.isAuthentication
+            } as IUsuario
     })
   } 
 
@@ -125,7 +203,6 @@ export class CadastroComponent implements OnInit {
           logradouro: this.objCep.logradouro,
           cep: this.objCep.cep,
           bairro: this.objCep.bairro,
-          uf: this.objCep.uf,
           dataNascimento: new Date().toISOString()
         }
     });
@@ -142,20 +219,39 @@ export class CadastroComponent implements OnInit {
     this.loaderService.display(true)    
     this.apiUsuarioService.deleteEnderecoUserById(_id)
     .toPromise()
-    .then(() => {
+    .then((response: Response | IEndereco) => {
+      
+      this.toastService.show("Excluido com sucesso!", 3000,'red z-depth-5');  
       this.contratoUsuario.enderecos.splice(indice,1);
       this.loaderService.display(false)
     })
     .catch((err:Error) => {
       this.loaderService.display(false)
+      console.clear()
       console.log(err.message);
     })
+  }
+
+  apertouSim(obj: any)
+  {
+    this.deleteEndereco(obj.id, obj.indice)
   }
 
   mudou()
   {
     this.isChange =  true;
   }
+}
+
+class ErroApps {
+  /**
+   *
+   */
+  constructor(
+    hasError: boolean,
+    msgBox: string
+  ) {}
+  
 }
 
 

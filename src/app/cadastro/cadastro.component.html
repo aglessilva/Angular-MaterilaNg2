@@ -1,11 +1,11 @@
 
-<form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario)" novalidate >
+<form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario, f)" >
     <div class="row">
         <fieldset style=" border-radius: 5px; width: 98%; margin: auto;">
             <div class="col s4">
                 <mz-input-container>
                     <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'magnify'"></i>
-                    <input mz-input [label]="'Buscar Cep'" name="seachCep" [(ngModel)]="f.seachCep" [validate]="true" [dataError]="'Esse campo contem caracteres invalidos'"
+                    <input mz-input  [label]="'Buscar Cep'" name="seachCep" [(ngModel)]="f.seachCep" [validate]="true" [dataError]="'Esse campo contem caracteres invalidos'"
                         [dataSuccess]="'ok'" id="seachCep-input" maxlength="8" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                         type="text" #seachCep>
                 </mz-input-container>
@@ -24,18 +24,35 @@
                 <div class="col s4">
                     
                     <mz-input-container>
-                        <input mz-input  mz-validation required
-                                [label]="'Nome'" name="nome" (ngModelChange)="mudou();" 
+                        <input mz-input 
+                                mz-validation required
+                                minlength="10"
+                                maxlength="20"
+                                [label]="'Nome'" 
+                                name="nome"  
                                 [(ngModel)]="contratoUsuario.usuario.nome" 
-                                [dataError]="'campo obrigatório'"
+                                #nome = "ngModel"
+                                [dataError]=" getErro(nome) "
+                                [dataSuccess]="'ok'"
                                 [validate]="true" 
                                 id="nome-input" type="text">
+                              
                     </mz-input-container>
-                </div>
+                </div>  
                 <div class="col s4">
                     <mz-input-container>
-                        <input requerid type="email" mz-input [label]="'E-mail'" name="email" [(ngModel)]="contratoUsuario.usuario.email" [validate]="true" [dataError]="'este e-mail não é váldo'"
-                            [dataSuccess]="'ok'">
+                        <input 
+                            mz-input 
+                            required 
+                            mz-validation
+                            type="email" 
+                            name="email" 
+                            [(ngModel)]="contratoUsuario.usuario.email" 
+                            [validate]="true" 
+                            [dataError]="' Email invalido'"
+                            [dataSuccess]="'ok'"
+                            [label]="'E-mail'" 
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                     </mz-input-container>
                 </div>
 
@@ -43,21 +60,40 @@
             <div class="row">
                 <div class="col s4">
                     <mz-input-container>
-                        <input type="text" requerid mz-input [label]="'Documento (RG, CPF)'" name="documento" [(ngModel)]="contratoUsuario.usuario.documento" [validate]="true"
-                            [dataError]="'campo obrigatório'" id="documento-input">
+                        <input 
+                            mz-input 
+                            required
+                            [dataSuccess]="'ok'"
+                            formatDoc = "999.999.999-99"
+                            type="text" 
+                            [label]="'Documento (RG, CPF, CNPJ)'" 
+                            name="documento" 
+                            [(ngModel)]="contratoUsuario.usuario.documento" 
+                            >
                     </mz-input-container>
+                    
                 </div>
                 <div class="col s4">
                     <mz-input-container>
-                        <input requerid mz-input  type="date"  placeholder="" 
-                        [label]="'Data de Nascimento'" name="dataNascimento" [(ngModel)]="contratoUsuario.usuario.dataNascimento "
-                            [validate]="true" [dataError]="'Data Invalida'"  />
+                        <input 
+                            mz-input  
+                            required
+                            formatDoc = "99/99/9999"
+                            type="text"  
+                            name="dataNascimento" 
+                            id="dataNascimento-input" 
+                            [(ngModel)]="contratoUsuario.usuario.dataNascimento"
+                            [label]="'Data de Nascimento'" />
                     </mz-input-container>
                     
                 </div>
                 <div class="col s4" style="margin-top:35px;">
                     <mz-switch-container>
-                        <input mz-switch name="sexo" [(ngModel)]="contratoUsuario.usuario.sexo" [off]="'Masculino'" [on]="'Ferminino'" type="checkbox">
+                        <input mz-switch name="sexo" 
+                        [(ngModel)]="contratoUsuario.usuario.sexo" 
+                        [off]="'Masculino'" 
+                        [on]="'Ferminino'" 
+                        type="checkbox">
                     </mz-switch-container>
                 </div>
             </div>
@@ -68,8 +104,8 @@
                             <div class="col s4">
                                 <mz-input-container>
                                     <i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'map-marker'"></i>
-                                    
-                                    <input mz-input [label]="'Cep'" name="cep" [(ngModel)]="contratoUsuario.endereco.cep" (ngModelChange)="mudou();" id="cep-input" length="150" type="text">
+                                      <input type="hidden" name="id" [(ngModel)]="contratoUsuario.endereco.id">  
+                                      <input mz-input [label]="'Cep'" name="cep" [(ngModel)]="contratoUsuario.endereco.cep" (ngModelChange)="mudou();" id="cep-input" length="150" type="text">
                                 </mz-input-container>
                             </div>
                             <div class="col s4">
@@ -112,14 +148,15 @@
                         </div>
                     </div>
             </fieldset>
+           
                 <div class="row fonte-default border-botton" style="padding: 2px !important;  width: 97%; margin: 5px 5px 5px 5px;" *ngFor="let item of contratoUsuario.enderecos; let i = index;">
                     <div class="col s3">{{ item.bairro }}</div>
                     <div class="col s3">{{ item.logradouro }}</div>
                     <div class="col s2">{{ item.cep }}</div>
                     <div class="col s2">{{ item.localidade }}</div>
                     <div class="col s2 red-text">
-                            <i mz-icon-mdi mz-tooltip tooltip="Editar registro" [position]="'top'" [align]="'center'" [icon]="'pencil-circle-outline'" class="link" (click)="editAddress(0)"></i>
-                            <i mz-icon-mdi mz-tooltip tooltip="Remover registro" [position]="'top'" [align]="'center'" [icon]="'minus-circle-outline'" class="link" (click)="deleteEndereco(item.id, i)"></i>
+                            <i mz-icon-mdi mz-tooltip tooltip="Editar registro" [position]="'top'" [align]="'center'" [icon]="'pencil-circle-outline'" class="link" (click)="editAddress(i)"></i>
+                            <i mz-icon-mdi mz-tooltip tooltip="Remover registro" [position]="'top'" [align]="'center'" [icon]="'minus-circle-outline'" class="link" (click)="mdl.modalOpen(); mdl.params = {'id':item.id, 'indice':i}"></i>
                     </div>
                 </div>
         </fieldset>
@@ -128,7 +165,7 @@
 
     <div class="row">
         <div class="col s2">
-            <button mz-button mz-icon-mdi size="'18px'" icon="content-save" type="submit">
+            <button mz-button mz-icon-mdi size="'18px'" icon="content-save" type="submit" >
                 Enviar
             </button>
         </div>
@@ -138,4 +175,12 @@
             </button>
         </div>
     </div>
+
 </form>
+
+<app-alert-message 
+    (onYes)="apertouSim($event)"  
+    [yesOrNo]="true"
+    [message]="{title:'Treinamento de Angular', textBody:'Deseja Exluir este registro?'}" #mdl>
+</app-alert-message>
+

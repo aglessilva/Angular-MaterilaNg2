@@ -62,7 +62,7 @@
     "object-literal-sort-keys": false,
    
     
-    "radix": true,
+   
     "triple-equals": [
       true,
       "allow-null-check"
@@ -81,12 +81,7 @@
     "unified-signatures": true,
     "variable-name": false,
 
-    "directive-selector": [
-      true,
-      "attribute",
-      "app",
-      "camelCase"
-    ],
+ 
     "component-selector": [
       true,
       "element",

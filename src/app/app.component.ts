@@ -50,7 +50,7 @@ export class AppComponent {
           this.authService.logoutUser(this.user)
           .then((ret: any) => {
                 this.habilitar = false;
-                this.route.navigate(['/login'])
+                this.route.navigate(['/'])
           })
           .catch( err => {
             alert('nao foi possivel sair do sistema, tente novamente');

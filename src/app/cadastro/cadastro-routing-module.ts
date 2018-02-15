@@ -1,3 +1,4 @@
+import { DependentesComponent } from './dependentes/dependentes.component';
 import { ListaComponent } from './../lista/lista.component';
 import { AuthGuard } from './../guard/auth-guard';
 import { NgModule } from '@angular/core';
@@ -13,6 +14,9 @@ const routesCadastro: Routes = [
     component: ListaComponent,
     canActivate: [AuthGuard],
     // resolve:{ usuario: AuthGuardResolver}
+  },
+  {
+    path:'dependente', component: DependentesComponent
   }
 ];
 

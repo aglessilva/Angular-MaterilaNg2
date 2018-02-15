@@ -1,35 +1,44 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-alert-message',
   templateUrl: './alert-message.component.html',
-  styleUrls: ['./alert-message.component.css']
+  styleUrls: ['./alert-message.component.css'],
 })
-export class AlertMessageComponent implements OnInit {
+export class AlertMessageComponent  {
 
-  @Input('title') private _title: boolean;
-  @Input('icon') private _icon: string;
-  @Input('body') private _body: any;
- 
-  constructor() { }
+
+  @Input('yesOrNo') private yesOrNo: boolean;
+  @Input('params') private params: any;
+  @Input('message') private message: IMenssage;
+  @Output('onYes') onYes =  new EventEmitter<any>()
+  @Output('onNo') onNo =  new EventEmitter<any>()
+
+  
+  constructor() {}
   
   ngOnInit() {
+
+    $(document).ready(function(){
+       $('.modal').modal();
+    });
+  }
+
+  actYes(){ this.onYes.emit(this.params); }
+  actNo(){ this.onNo.emit(this.params);  }
+
+  modalOpen()
+  {
+    $('#modal1').modal('open');
   }
   
-  hbt()
-  {
-     
-      let box = document.getElementsByClassName('box')[0]
-      
-        if (box.classList.contains('box-hidden')) {
-          // show
-          box.classList.add('box-transition');
-          box.clientWidth; // force layout to ensure the now display: block and opacity: 0 values are taken into account when the CSS transition starts.
-          box.classList.remove('box-hidden');
-        } else {
-          // hide
-          box.classList.add('box-transition');
-          box.classList.add('box-hidden');
-        }    
-  }
 }
+interface IMenssage {
+  title: string   
+  textBody: any,
+}
+
+
+
+

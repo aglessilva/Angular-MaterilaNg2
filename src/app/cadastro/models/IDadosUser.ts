@@ -20,7 +20,6 @@ interface IEndereco {
     cep: string;
     localidade: string;
     complemento: string;
-    uf: string;
     seachCep: string;
   }
 
@@ -29,3 +28,4 @@ interface IContratoUsuario {
       enderecos: Array<IEndereco>;
       endereco: IEndereco;
   }
+

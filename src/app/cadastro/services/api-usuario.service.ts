@@ -26,39 +26,49 @@ export class ApiUsuarioService {
 
   })
   postUser(usuario: any) {
-      return this.http.post('http://localhost/webApi/api/Usuarios', JSON.stringify(usuario), { headers: this.heders})
+      //return this.http.post('http://localhost:8080/webApi/api/Usuarios', JSON.stringify(usuario), { headers: this.heders})
+      return this.http.post('http://localhost:60367/api/Usuarios', JSON.stringify(usuario), { headers: this.heders})
   }
 
   putUser(usuario: IUsuario)
   {
-    return this.http.put('http://localhost/webApi/api/Usuarios/' + usuario.idUsuario, JSON.stringify(usuario), { headers: this.heders})
+    //return this.http.put('http://localhost:8080/webApi/api/Usuarios/', JSON.stringify(usuario), { headers: this.heders})
+    return this.http.put('http://localhost:60367/api/Usuarios/', JSON.stringify(usuario), { headers: this.heders})
   }
 
   getUser() { 
-    return this.http.get('http://localhost/webApi/api/Usuarios')
+    return this.http.get('http://localhost:8080/webApi/api/Usuarios')
   }
 
   getUserById(_id: number) { 
-    return this.http.get('http://localhost/webApi/api/Usuarios/' + _id)
+    return this.http.get('http://localhost:8080/webApi/api/Usuarios/' + _id)
   }
 
   getUserByName(user: IUsuario) { 
 
-    return this.http.post('http://localhost/webApi/api/Usuarios/filter', JSON.stringify(user),{ headers : this.heders });
+    return this.http.post('http://localhost:8080/webApi/api/Usuarios/filter', JSON.stringify(user),{ headers : this.heders });
   }
 
-  deleteEnderecoUserById(_idUser: string): Observable<object> { 
-    return this.http.delete('http://localhost/webApi/api/Endereco/' +_idUser, { headers: this.heders } );
+  deleteEnderecoUserById(_idUser: string) { 
+    return this.http.delete('http://localhost:8080/webApi/api/Endereco/' +_idUser, { headers: this.heders } );
+  }
+
+  postEnderecoUserById(_endereco: IEndereco) { 
+    return this.http.post('http://localhost:8080/webApi/api/Endereco/',JSON.stringify(_endereco), { headers: this.heders } );
+  }
+
+  putEnderecoUserById(_endereco: IEndereco){ 
+    return this.http.put('http://localhost:8080/webApi/api/Endereco/'+ _endereco.id ,JSON.stringify(_endereco), { headers: this.heders } );
   }
 
   deleteUserById(_idUser: string)
   {
-    return this.http.delete('http://localhost/webApi/api/Usuarios/' +_idUser, { headers: this.heders })
+    return this.http.delete('http://localhost:8080/webApi/api/Usuarios/' +_idUser, { headers: this.heders })
   }
 
   login(user: IUsuario)
   {
-    return this.http.post('http://localhost/webApi/api/Usuarios/Login', JSON.stringify(user), { headers: this.heders })
+    return this.http.post('http://localhost:8080/webApi/api/Usuarios/Login', JSON.stringify(user), { headers: this.heders })
   }
 
 } 

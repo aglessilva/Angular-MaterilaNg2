@@ -1,3 +1,13 @@
-<p>
-  dependentes works!
-</p>
+
+
+<app-alert-message 
+    (onYes)="apertouSim()" 
+    (onNo)="apertouNao();" 
+    [yesOrNo]="true"
+    [message]="{title:'ola teste', textBody:corpo}" #mdl>
+</app-alert-message>
+
+
+
+  <!-- Modal Trigger -->
+  <button (click)="mdl.modalOpen();" class="btn">Modal chama</button>

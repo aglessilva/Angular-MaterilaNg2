@@ -1,23 +1,18 @@
+ <!-- Modal Trigger -->
+ <div id="modal1" class="modal" style=" overflow: hidden; border-radius:10px;">
+   <div style=" font-size: 20px ;padding-top: 10px; padding-left: 20px; font-weight: bold; color: rgb(160, 20, 20);">
+      {{ message.title }}
+        <hr>
+   </div>
+   <div class="modal-content">
+        {{ message.textBody }}
+   </div>
+   <div class="modal-footer">
+            <button [hidden]="!yesOrNo" mz-button mz-icon-mdi class="modal-action modal-close" size="'18px'" icon="check" [flat]="true" (click)="actYes()">Sim</button>
+            <button [hidden]="!yesOrNo" mz-button mz-icon-mdi class="modal-action modal-close" size="'18px'" icon="close-outline" [flat]="true" (click)="actNo()">Não</button>
+            <button type="button" mz-button mz-icon-mdi size="'18px'" icon="close"  class="modal-action modal-close waves-effect waves-green btn-flat" >Fechar</button>
+   </div>
+ </div>
 
-<div id="box" class="box box-hidden row" style="padding: 0px 0px 0px" >
-    <div class="row">
-        <div class="col s11">
-            <div  style="text-align: left; padding-left: 10px; font-size: 18px;">
-                Titulo
-            </div>
-        </div>
-        <div class="col s1 white-text"><i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'alert-circle-outline'"></i></div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            teste com html
-        </div>
-    </div>
-</div>
-  
-<div class="row">
-    <div class="col s2">
-            
-        <input type="button" name="btn" value="Teste" (click)="hbt();">
-    </div>
-</div>
+
+ 

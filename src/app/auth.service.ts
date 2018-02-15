@@ -57,6 +57,7 @@ export class AuthService {
         })
         .catch((err: Error) => {
             alert('erro ao tentar sair do sistema' + err.message);
+            return false
         })
     }
 
