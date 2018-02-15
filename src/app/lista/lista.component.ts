@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http/src/static_response';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { LoaderService } from '../loader.service';
+import { MzToastService } from 'ng2-materialize';
 
 @Component({
   selector: 'app-lista',
@@ -16,10 +17,7 @@ export class ListaComponent implements OnInit {
     private apiUsuarioService: ApiUsuarioService,
     private loaderService: LoaderService,
     private routeNavigate: ActivatedRoute,
-<<<<<<< HEAD
     private toastService: MzToastService,
-=======
->>>>>>> parent of 09f6273... HAS -> ajuste das funcionalidade de exclusão de registro e de filtros de pesquisa
   )
      { }
 
@@ -41,13 +39,8 @@ export class ListaComponent implements OnInit {
 
   searchByName(_name: string)
   {
-<<<<<<< HEAD
    // if(_name.length < 3) return;
 
-=======
-    if(_name.length < 3) return;
-    debugger
->>>>>>> parent of 09f6273... HAS -> ajuste das funcionalidade de exclusão de registro e de filtros de pesquisa
     this.loaderService.display(true);
     this.usuarios = new Array();
     let usuario: IUsuario = { idUsuario: 0 ,nome: _name ,documento: '' ,dataNascimento: '',sexo: '',email: ''} as IUsuario ;

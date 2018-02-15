@@ -92,7 +92,7 @@ export class CadastroComponent implements OnInit {
     frm.controls['nome']
   }
 
-  postPutUser(_contratoUsuario: IContratoUsuario, frm: NgForm) {
+  postPutUser(_contratoUsuario: IContratoUsuario) {
     this.isChange = false;
     let user: IUsuario = {} as IUsuario
     let adress: IEndereco = {} as IEndereco 
@@ -125,19 +125,8 @@ debugger
               this.route.navigate(['/lista'])
             })
             .catch((err: Error) => alert('ERRO => ' + err.message))
-<<<<<<< HEAD
-        }
-          
-          this.toastService.show("Dados atualizado com Sucesso!", 3000,'blue z-depth-5');  
-          this.route.navigate(['/lista'])
-        })
-        .catch((err: Error) =>{ alert('ERRO => ' + err.message)
-      console.log(err)});
-        
-=======
         })
         .catch((err: Error) => alert('ERRO => ' + err.message));
->>>>>>> parent of 09f6273... HAS -> ajuste das funcionalidade de exclusão de registro e de filtros de pesquisa
       else
       this.apiUsuarioService.postUser(user)
         .toPromise()

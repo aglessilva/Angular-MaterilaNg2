@@ -4,11 +4,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor,  } from '@angular/forms';
 
 @Directive({ 
     selector: '[formatDoc]',
-    providers:[{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting:FormatDocsDirective,
-        multi: true
-    }]
+    
  })
 export class FormatDocsDirective implements ControlValueAccessor {
 

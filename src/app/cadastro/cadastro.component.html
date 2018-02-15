@@ -1,9 +1,5 @@
 
-<<<<<<< HEAD
-<form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario, f)" >
-=======
 <form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario)" novalidate >
->>>>>>> parent of 09f6273... HAS -> ajuste das funcionalidade de exclusão de registro e de filtros de pesquisa
     <div class="row">
         <fieldset style=" border-radius: 5px; width: 98%; margin: auto;">
             <div class="col s4">
@@ -35,8 +31,8 @@
                                 [label]="'Nome'" 
                                 name="nome"  
                                 [(ngModel)]="contratoUsuario.usuario.nome" 
-                                #nome = "ngModel"
-                                [dataError]=" getErro(nome) "
+                                #Inputnome = "ngModel"
+                                [dataError]=" getErro(Inputnome) "
                                 [dataSuccess]="'ok'"
                                 [validate]="true" 
                                 id="nome-input" type="text">
