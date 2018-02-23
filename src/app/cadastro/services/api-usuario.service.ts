@@ -26,17 +26,15 @@ export class ApiUsuarioService {
 
   })
   postUser(usuario: any) {
-      //return this.http.post('http://localhost:8080/webApi/api/Usuarios', JSON.stringify(usuario), { headers: this.heders})
-      return this.http.post('http://localhost:60367/api/Usuarios', JSON.stringify(usuario), { headers: this.heders})
+      return this.http.post('http://localhost:8080/webApi/api/Usuarios', JSON.stringify(usuario), { headers: this.heders})
   }
 
   putUser(usuario: IUsuario)
   {
-    //return this.http.put('http://localhost:8080/webApi/api/Usuarios/', JSON.stringify(usuario), { headers: this.heders})
-    return this.http.put('http://localhost:60367/api/Usuarios/', JSON.stringify(usuario), { headers: this.heders})
+    return this.http.put('http://localhost:8080/webApi/api/Usuarios/' + usuario.idUsuario, JSON.stringify(usuario), { headers: this.heders})
   }
 
-  getUser() { 
+  getUser(): Observable<object> { 
     return this.http.get('http://localhost:8080/webApi/api/Usuarios')
   }
 

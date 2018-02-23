@@ -9,3 +9,12 @@ export class LoaderService {
         this.status.next(value);
     }
 }
+
+@Injectable()
+export class MsgBoxService {
+    public status: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+    display(value: boolean) {
+        this.status.next(value);
+    }
+}

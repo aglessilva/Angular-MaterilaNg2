@@ -1,18 +1,31 @@
 
-  <div class="container">
-    <nav *ngIf="habilitar" style="margin-bottom: 10px;">
+  <div *ngIf="habilitar">
+    
+    <ul id="dropdown1" class="dropdown-content">
+      <li><a [routerLink]="['/cadastro']">Usuarios</a></li>
+      <li><a [routerLink]="['/dependente']">Dependentes</a></li>
+      <li class="divider"></li>
+      <li><a href="#!">three</a></li>
+    </ul> 
 
-      <div class="nav-wrapper">
-        <a mz-button class="right" style="margin-right: 10px; margin-top: 13px;" (click)="logout();">
-          SAIR
-        </a>
-        <label class="right" style="margin-right: 10px; color:white;">{{ user.nome }}</label>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
-
+    <nav style="margin-bottom: 10px;">
+      <div  class="nav-wrapper">
+          <a href="#" data-activates="mobile-demo" id="btn-sidenav-demo"  class="button-collapse" ><i mz-icon-mdi mz-input-prefix [size]="'24px'" [icon]="'format-list-bulleted-type'"></i></a>
+          
+         <label class="right" style="margin-right: 10px; color:white;">
+          <i mz-icon-mdi
+              [align]="'right'"
+              [icon]="'logout-variant'"
+              [size]="'36px'"
+              (click)="logout();"
+              mz-tooltip tooltip="Sair do sistema!"
+              style="cursor:pointer;">
+            </i>
+          </label>
+        <ul class="left hide-on-med-and-down">
           <li routerLinkActive="active">
-            <a [routerLink]="['/cadastro']" data-activates="dropdown1" class="dropdown-button">Cadastro</a>
+            <a class='dropdown-button'  data-activates='dropdown1'>Cadastros</a>
           </li>
-
           <li routerLinkActive="active">
             <a [routerLink]="['/lista']">Lista</a>
           </li>
@@ -23,9 +36,125 @@
             <a [routerLink]="['/alertMessage']"> Alerta</a>
           </li>
         </ul>
+
       </div>
-    </nav>
+      <mz-sidenav #sidenav
+        [id]="'sidenav-demo'"
+        [collapseButtonId]="'btn-sidenav-demo'"
+        [edge]="'right'">
+    
+        <mz-sidenav-header>
+          <div class="user-view menu-backGround">
+            <img class="circle avatar" src="assets/userlogin.png">
+            <div class="white-text name">{{ user.nome }}</div>
+            <div class="white-text email">{{ user.email }}</div>
+          </div>
+        </mz-sidenav-header>
+    
+        <mz-sidenav-subheader>Titulo do grupo</mz-sidenav-subheader>
+    
+        <mz-sidenav-link>
+          <a>primeiro Link</a>
+        </mz-sidenav-link>
+    
+        <mz-sidenav-link [active]="true">
+          <a>segundo Link</a>
+        </mz-sidenav-link>
+    
+        <mz-sidenav-link>
+          <a class="waves-effect">efeito de clik</a>
+        </mz-sidenav-link>
+    
+        <mz-sidenav-divider></mz-sidenav-divider>
+    
+        <mz-sidenav-link>
+          <a><i mz-icon-mdi [icon]="'cloud'"></i>Link com icone</a>
+        </mz-sidenav-link>
+    
+        <mz-sidenav-link>
+          <a mz-icon-mdi [icon]="'earth'"> outro com Icon</a>
+        </mz-sidenav-link>
+    
+        <mz-sidenav-divider></mz-sidenav-divider>
+    
+        <mz-sidenav-subheader> Outro Titulo do grupo</mz-sidenav-subheader>
+    
+        <mz-sidenav-collapsible>
+    
+          <mz-sidenav-collapsible-header>
+            Menu com Collapsible
+          </mz-sidenav-collapsible-header>
+    
+          <mz-sidenav-collapsible-content>
+    
+            <mz-sidenav-link>
+              <a class="waves-effect">First Link</a>
+            </mz-sidenav-link>
+    
+            <mz-sidenav-link>
+              <a class="waves-effect">Second Link</a>
+            </mz-sidenav-link>
+    
+            <mz-sidenav-link>
+              <a class="waves-effect">Third Link</a>
+            </mz-sidenav-link>
+          </mz-sidenav-collapsible-content>
+        </mz-sidenav-collapsible>
+    
+        <mz-sidenav-collapsible>
+    
+          <mz-sidenav-collapsible-header>
+            <i mz-icon-mdi [icon]="'menu-right'" class="caret"></i>Collapsible With Carret 2
+          </mz-sidenav-collapsible-header>
+    
+          <mz-sidenav-collapsible-content>
+              <mz-sidenav-link>
+                  <a [routerLink]="['/lista']" class="waves-effect"><i mz-icon-mdi [icon]="'palette'"></i>Lista</a>
+                </mz-sidenav-link>
+        
+                <mz-sidenav-link>
+                  <a  [routerLink]="['/cadastro']" class="waves-effect"><i mz-icon-mdi [icon]="'flash'"></i>Cadastro</a>
+                </mz-sidenav-link>
+        
+                <mz-sidenav-link>
+                  <a  [routerLink]="['/dependente']" class="waves-effect"><i mz-icon-mdi [icon]="'flash'"></i>Dependente</a>
+                </mz-sidenav-link>
+        
+                <mz-sidenav-link>
+                  <a class="waves-effect"><i mz-icon-mdi [icon]="'gamepad'"></i>Third Link</a>
+                </mz-sidenav-link>
+          </mz-sidenav-collapsible-content>
+        </mz-sidenav-collapsible>
+    
+        <mz-sidenav-collapsible>
+    
+          <mz-sidenav-collapsible-header>
+            <i mz-icon-mdi [icon]="'diamond'"></i>Cadastro
+          </mz-sidenav-collapsible-header>
+    
+          <mz-sidenav-collapsible-content>
+    
+            <mz-sidenav-link>
+              <a [routerLink]="['/lista']" class="waves-effect"><i mz-icon-mdi [icon]="'palette'"></i>Lista</a>
+            </mz-sidenav-link>
+    
+            <mz-sidenav-link>
+              <a  [routerLink]="['/cadastro']" class="waves-effect"><i mz-icon-mdi [icon]="'flash'"></i>Cadastro</a>
+            </mz-sidenav-link>
+    
+            <mz-sidenav-link>
+              <a  [routerLink]="['/dependente']" class="waves-effect"><i mz-icon-mdi [icon]="'flash'"></i>Dependente</a>
+            </mz-sidenav-link>
+    
+            <mz-sidenav-link>
+              <a class="waves-effect"><i mz-icon-mdi [icon]="'gamepad'"></i>Third Link</a>
+            </mz-sidenav-link>
+          </mz-sidenav-collapsible-content>
+        </mz-sidenav-collapsible>
+      </mz-sidenav> 
+    </nav>  
+  </div>
+
     <router-outlet>
       <span *ngIf="showLoader" class="loading"></span>
     </router-outlet>
-  </div>

@@ -4,6 +4,7 @@ import { AuthGuard } from './../guard/auth-guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EnderecoComponent } from './endereco/endereco.component';
+import { DependenteGuardCandActivate } from '../guard/auth-guard-candActivate';
 
 
 
@@ -16,8 +17,14 @@ const routesCadastro: Routes = [
     // resolve:{ usuario: AuthGuardResolver}
   },
   {
-    path:'dependente', component: DependentesComponent
-  }
+    path:'dependente', 
+    component: DependentesComponent,
+    canDeactivate:[DependenteGuardCandActivate]
+  },
+  {
+    path:'endereco', component: EnderecoComponent
+  },
+
 ];
 
 @NgModule({

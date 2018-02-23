@@ -1,5 +1,5 @@
 
-<form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario)" novalidate >
+<form  #f="ngForm" (ngSubmit)="postPutUser(contratoUsuario)" >
     <div class="row">
         <fieldset style=" border-radius: 5px; width: 98%; margin: auto;">
             <div class="col s4">
@@ -29,10 +29,10 @@
                                 minlength="10"
                                 maxlength="20"
                                 [label]="'Nome'" 
-                                name="nome"  
+                                name="nome" (ngModelChange)="mudou();" 
                                 [(ngModel)]="contratoUsuario.usuario.nome" 
-                                #Inputnome = "ngModel"
-                                [dataError]=" getErro(Inputnome) "
+                                #nome = "ngModel"
+                                [dataError]=" getErro(nome) "
                                 [dataSuccess]="'ok'"
                                 [validate]="true" 
                                 id="nome-input" type="text">
@@ -69,7 +69,7 @@
                             [label]="'Documento (RG, CPF, CNPJ)'" 
                             name="documento" 
                             [(ngModel)]="contratoUsuario.usuario.documento" 
-                            >
+                            id="documento-input" >
                     </mz-input-container>
                     
                 </div>
@@ -183,4 +183,3 @@
     [yesOrNo]="true"
     [message]="{title:'Treinamento de Angular', textBody:'Deseja Exluir este registro?'}" #mdl>
 </app-alert-message>
-

@@ -5,7 +5,7 @@ import { NgForm, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { LoaderService } from '../loader.service';
-import { MzToastService, ErrorMessageResource } from 'ng2-materialize';
+import { MzToastService } from 'ng2-materialize';
 import { NgModel } from '@angular/forms/src/directives/ng_model';
 import { FormatDocsDirective } from './directive/default-directive';
 import { Observable } from 'rxjs/Observable';
@@ -43,6 +43,8 @@ export class CadastroComponent implements OnInit {
    
   }
 
+
+
   ngOnInit() {
     this.descriptions =  this.routeNavigate.queryParams.subscribe(
       (navigate: any) => {
@@ -51,18 +53,6 @@ export class CadastroComponent implements OnInit {
         this.getUserById(this.id);
       }
     )
-
-    this.contratoUsuario.usuario = {
-      idUsuario: 0
-      ,nome: ''
-      ,documento: ''
-      ,dataNascimento: ''
-      ,sexo: ''
-      ,email: ''
-      ,login: ''
-      ,senha: ''
-      ,isAuthentication: false
-    } as IUsuario
   }
   ngOnDestroy() {
     this.descriptions.unsubscribe();
@@ -97,7 +87,7 @@ export class CadastroComponent implements OnInit {
     let user: IUsuario = {} as IUsuario
     let adress: IEndereco = {} as IEndereco 
     let retornoApi: Observable<Object>
-debugger
+
     Object.assign( user, _contratoUsuario.usuario)
     let dt = _contratoUsuario.usuario.dataNascimento.split('/')
     user.dataNascimento = dt[2]+'-'+dt[1]+'-'+dt[0]
@@ -109,33 +99,58 @@ debugger
         else
         user.sexo = 'M' 
     
-     if(user.idUsuario > 0) 
+      let response: IUsuario =  null;
+    
+      if(user.idUsuario > 0) 
         this.apiUsuarioService.putUser(user)
         .toPromise()
-        .then((response: Response) => {
-
+        .then(response => {
+        
+        if(!this.isOk)
+        {
           if(adress.id === 0 || adress.id ===  undefined)
             retornoApi = this.apiUsuarioService.postEnderecoUserById(adress)
           else
             retornoApi = this.apiUsuarioService.putEnderecoUserById(adress)
 
-          retornoApi.toPromise()
-            .then(() => {
-              this.toastService.show("Atualizado com Sucesso!", 3000,'green z-depth-5');  
-              this.route.navigate(['/lista'])
+            retornoApi.toPromise()
+            .then((response: number) => {
+              this.toastService.show("Endereço atualizado com Sucesso!", 3000,'green z-depth-5') 
             })
             .catch((err: Error) => alert('ERRO => ' + err.message))
+          }
+          
+          this.toastService.show("Dados atualizado com Sucesso!", 3000,'blue z-depth-5');  
+          this.route.navigate(['/lista'])
         })
         .catch((err: Error) => alert('ERRO => ' + err.message));
+        
       else
-      this.apiUsuarioService.postUser(user)
+      {
+        this.apiUsuarioService.postUser(user)
         .toPromise()
-        .then((response: Response) => {
-          this.toastService.show('Inserido com sucesso', 3000,'red  z-depth-5');  
-          this.route.navigate(['/lista'])
+        .then((responseUser: IUsuario) => {
+            adress.idUsuario = responseUser.idUsuario
+            this.apiUsuarioService.postEnderecoUserById(adress)
+            .toPromise()
+            .then(()=>{
+                    this.toastService.show('Inserido com sucesso', 3000,'red z-depth-5');  
+                    this.toastService.show("Endereço inserido com Sucesso!", 3000,'green z-depth-5') 
+                    this.route.navigate(['/lista'])
+                }).catch((erro: Error)=>{
+                  debugger
+                    this.apiUsuarioService.deleteUserById(adress.idUsuario.toString())
+                    .toPromise()
+                    .then(() =>{
+                      debugger
+                      this.toastService.show("Erro ao cadastrar o Endereço, o usuario foi removido", 3000,'black z-depth-5') 
+                    })
+                      console.error(erro);
+                      alert(erro.message)
+                })
           })
-          .catch((err: Error) => alert('ERRO => ' + err.message));
-      
+          .catch((err: Error) => console.log('ERRO => ' + err.message + '---> ' + err));
+      }
   }
 
   getUserById(_id: number)
@@ -151,11 +166,11 @@ debugger
           let newEnd: IEndereco  = {
                           id:_endereco.id ,
                           idUsuario: _endereco.idUsuario,
-                          bairro:_endereco.bairro.trim(),
-                          logradouro: _endereco.logradouro.trim(),
-                          cep: _endereco.cep.trim(),
-                          localidade: _endereco.localidade.trim(),
-                          complemento: _endereco.complemento.trim(),
+                          bairro: _endereco.bairro == null ? '' : _endereco.bairro.trim(),
+                          logradouro: _endereco.logradouro  == null  ? '' : _endereco.logradouro.trim(),
+                          cep: _endereco.cep  == null ? '' : _endereco.cep.trim(),
+                          localidade:  _endereco.localidade  == null ? '' : _endereco.localidade.trim(),
+                          complemento:  _endereco.complemento  == null ? '' : _endereco.complemento.trim(),
                         } as IEndereco
           this.contratoUsuario.enderecos.push(newEnd)
       });
@@ -184,8 +199,11 @@ debugger
       this.isOk =  false;
       this.view(formCep)
     })
-    .catch(err => {
+    .catch((err: Error) => {
+      debugger
       alert('Erro: =>' + err);
+      console.log(err.message)
+      console.error(err)
     });
   }
 
@@ -220,8 +238,6 @@ debugger
     })
     .catch((err:Error) => {
       this.loaderService.display(false)
-      console.clear()
-      console.log(err.message);
     })
   }
 
@@ -246,8 +262,3 @@ class ErroApps {
   ) {}
   
 }
-
-
-
-
-

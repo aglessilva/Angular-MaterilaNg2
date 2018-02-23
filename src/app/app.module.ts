@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterializeModule } from 'ng2-materialize';
-import { LoaderService } from './loader.service';
+import { LoaderService, MsgBoxService } from './loader.service';
 import { AuthGuard } from './guard/auth-guard';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { AuthGuardResolver } from './guard/auth-guard-resolve';
-import { CadastroGuardCandActivate } from './guard/auth-guard-candActivate';
+import { CadastroGuardCandActivate, DependenteGuardCandActivate } from './guard/auth-guard-candActivate';
 import { HttpClientModule } from '@angular/common/http';
 import { DependentesComponent } from './cadastro/dependentes/dependentes.component';
 import { CadastroModule } from './cadastro/cadastro-module';
@@ -51,10 +51,12 @@ import { CadastroModule } from './cadastro/cadastro-module';
    // SearchCepService,
    // ApiUsuarioService,
     LoaderService,
+    MsgBoxService,
     AuthService,
     AuthGuard,
     AuthGuardResolver,
-    CadastroGuardCandActivate
+    CadastroGuardCandActivate,
+    DependenteGuardCandActivate
   ],
   bootstrap: [AppComponent]
 })

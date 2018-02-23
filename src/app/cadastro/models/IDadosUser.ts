@@ -2,6 +2,9 @@
 interface IUsuario {
 
     idUsuario: number;
+    idResponsave: number;
+    responsavel: any;
+    tipo: string;
     nome: string;
     documento: string;
     dataNascimento: string;
@@ -27,5 +30,11 @@ interface IContratoUsuario {
       usuario: IUsuario;
       enderecos: Array<IEndereco>;
       endereco: IEndereco;
+  }
+
+  interface ISelectItem
+  {
+      key: string,
+      value: any;
   }
 

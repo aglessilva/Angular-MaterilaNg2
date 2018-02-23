@@ -1,13 +1,89 @@
+<form [formGroup]="formulario" (ngSubmit)="postPutUser();" novalidate> 
+  <fieldset style=" border-radius: 5px; width: 99%; margin: auto; margin-top: 10px;">   
+      <div class="row">
+        <div class="col s3">
+            <mz-select-container>
+              <select  
+                    mz-select 
+                    mz-validation
+                    required
+                    id="select-responsavel"
+                    formControlName="responsavel" 
+                    [errorMessageResource]="msgErrorResource.responsavel"
+                    [label]="'Responsavel'" 
+                    [placeholder]="'Selecione...'">
+                 <option *ngFor="let item of listUsuario" [ngValue]="item">{{ item.key }}</option>
+              </select>
+            </mz-select-container>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col s3">
+        <mz-input-container>
+          <input 
+          mz-input  
+          mz-validation
+          required
+          id="input-nome"
+          formControlName="nome"
+          type="text"  
+          [errorMessageResource]="msgErrorResource.nome"
+          [label]="'Nome'"/>
 
+        </mz-input-container>    
+      </div>
+      <div class="col s2">
+        <mz-input-container>
+          <input 
+          mz-input 
+          mz-validation
+          required
+          id="input-documento"
+          formControlName="documento" 
+          type="text"  
+          formatDoc = "999.999.999-99"
+          [errorMessageResource]="msgErrorResource.documento"
+          [label]="'CPF'" 
+          />
+        </mz-input-container>    
+      </div>
+      <div class="col s2">
+          <mz-datepicker-container >
+              <input mz-datepicker mz-validation
+                id="datepicker-birthdate"
+                formControlName="dataNascimento"
+                type="text"
+                [options]="{ formatSubmit: 'dd/mm/yyyy' }"
+                [label]="'Data Nascimento'" />
+            </mz-datepicker-container>
+      </div>
+      <div class="col s3">
+        <mz-input-container>
+          <input 
+          mz-input 
+          mz-validation
+          required
+          id="input-email"
+          formControlName="email" 
+          type="text"  
+          [errorMessageResource]="msgErrorResource.email"
+          [label]="'E-mail'"/>
+        </mz-input-container>    
+      </div>
+      <div class="col s2" style="padding-top: 35px;" >
+        <mz-switch-container>
+          <input mz-switch 
+          formControlName="sexo" 
+          [off]="'Masculino'" 
+          [on]="'Ferminino'" 
+          type="checkbox">
+        </mz-switch-container>
+      </div>
+    </div>
 
-<app-alert-message 
-    (onYes)="apertouSim()" 
-    (onNo)="apertouNao();" 
-    [yesOrNo]="true"
-    [message]="{title:'ola teste', textBody:corpo}" #mdl>
-</app-alert-message>
-
-
-
-  <!-- Modal Trigger -->
-  <button (click)="mdl.modalOpen();" class="btn">Modal chama</button>
+    <button mz-button mz-icon-mdi size="'18px'" icon="content-save" type="submit"  >Enviar</button>
+  </fieldset>
+<section>
+  <p>{{ formulario.dirty }}</p>
+</section>
+</form>

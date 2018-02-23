@@ -1,15 +1,17 @@
 import { Directive, HostListener, Input,ElementRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor,  } from '@angular/forms';
+import { ControlValueAccessor,  } from '@angular/forms';
+import { MzToastService } from 'ng2-materialize';
+import { empty } from 'rxjs/Observer';
 
 
 @Directive({ 
     selector: '[formatDoc]',
-    
  })
 export class FormatDocsDirective implements ControlValueAccessor {
 
     constructor(
-       private elementRef: ElementRef
+       private elementRef: ElementRef,
+       private toastService: MzToastService,
     ) { }
 
     onChange: any;
@@ -67,6 +69,7 @@ export class FormatDocsDirective implements ControlValueAccessor {
         if (valor.indexOf('_') > -1) {
           valor = valor.substr(0, valor.indexOf('_'));
         }
+        
         $event.target.value = valor;
       }
 
@@ -79,23 +82,26 @@ export class FormatDocsDirective implements ControlValueAccessor {
         {
             if($event.target.value.length !== this.formatDoc.length)
             {
-                $event.target.value = '';
+                $event.target.value = null;
                 return
             }
 
             if(this.formatDoc.length === 14) //Cpf 
             {
                 if(!this.ValidarCPF($event.target.value))
-                {
-                    $event.target.value = '';
-                    alert('cpf invalido!');
-                }
+                    this.toastService.show("CPF Inválido!", 3000,'black z-depth-5'); 
             }
 
             if(this.formatDoc.length === 17) //Cnpj
             {
                 if(!this.ValidarCNPJ($event.target.value))
-                    alert('CNPJ Invalido')
+                    this.toastService.show("CPF Inválido!", 3000,'black z-depth-5'); 
+            } 
+           
+            if(this.formatDoc.length === 10) //Data
+            {
+                if(this.dateIsInvalid($event.target.value))
+                    this.toastService.show("Data invalida!", 3000,'black z-depth-5'); 
             } 
         }
     }
@@ -172,8 +178,21 @@ export class FormatDocsDirective implements ControlValueAccessor {
         dig2 = (((dig2%11)<2)? 0:(11-(dig2%11)));
 
         return ((dig1*10)+dig2) === digito
-               
+    }
 
+    dateIsInvalid(objData): boolean
+    {
+        let isDataValide = false;
+        if((+objData.split('/')[0] < 1 ) || (+objData.split('/')[0] > 31 )) 
+            isDataValide =  true;
+        
+        if((+objData.split('/')[1] < 1 ) || (+objData.split('/')[1] > 12 )) 
+            isDataValide =  true;
+        
+        if((+objData.split('/')[2] < 1900 ) || (+objData.split('/')[2] > (new Date()).getFullYear())) 
+            isDataValide =  true;
+
+        return isDataValide
     }
    
 }

@@ -8,7 +8,7 @@ import { MzToastService } from 'ng2-materialize';
 
 @Component({
   selector: 'app-lista',
-  templateUrl: './lista.component.html',
+  templateUrl:'./lista.component.html',
   styleUrls: ['./lista.component.css']
 })
 export class ListaComponent implements OnInit {
@@ -37,13 +37,14 @@ export class ListaComponent implements OnInit {
     this.getUser()
   }
 
+
   searchByName(_name: string)
   {
    // if(_name.length < 3) return;
-
+    debugger
     this.loaderService.display(true);
     this.usuarios = new Array();
-    let usuario: IUsuario = { idUsuario: 0 ,nome: _name ,documento: '' ,dataNascimento: '',sexo: '',email: ''} as IUsuario ;
+    let usuario: IUsuario = { idUsuario: 0 ,nome: _name ,documento:_name ,dataNascimento: _name,sexo: _name,email: _name} as IUsuario ;
     this.apiUsuarioService.getUserByName(usuario)
     .toPromise()
     .then((res: Array<IUsuario>) => {
@@ -83,12 +84,17 @@ export class ListaComponent implements OnInit {
     this.apiUsuarioService.deleteUserById(_id)
     .toPromise()
     .then((response: Response | IUsuario) => {
-        alert('ok');
+      this.toastService.show("Excluido com sucesso!", 3000,'yellow z-depth-5');  ;
         this.usuarios.splice(indice, 1);
     })
     .catch((err: Error) => {
       console.error(err);
     })
+  }
+
+  apertouSim(item: any)
+  {
+    this.deleteUser(item.id, item.indice);
   }
 
 }
