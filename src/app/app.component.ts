@@ -3,6 +3,7 @@ import { RouterLinkActive, Router } from '@angular/router';
 import { LoaderService } from './loader.service';
 import { AuthService } from './auth.service';
 import { ApiUsuarioService } from './cadastro/services/api-usuario.service';
+import { Subscription } from 'rxjs/Subscription';
 //import { MzSidenavModule } from 'ng2-materialize'
 
 
@@ -64,6 +65,8 @@ export class AppComponent {
 
       
       }
+
+      
 
       logout()
       {   

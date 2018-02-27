@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { MsgBoxService } from '../loader.service';
 
 
 @Component({
@@ -14,19 +16,35 @@ export class AlertMessageComponent  {
   @Input('message') private message: IMenssage;
   @Output('onYes') onYes =  new EventEmitter<any>()
   @Output('onNo') onNo =  new EventEmitter<any>()
-
+  private descriptions: Subscription
   
-  constructor() {}
+  constructor(private msgBoxService: MsgBoxService) {}
   
   ngOnInit() {
 
     $(document).ready(function(){
-       $('.modal').modal();
+       $('.modal').modal(
+        {
+          dismissible: false, 
+          opacity: .5, 
+          inDuration: 300, 
+          outDuration: 200,
+          startingTop: '4%',
+          endingTop: '10%', 
+          
+        }
+       );
     });
-  }
 
-  actYes(){ this.onYes.emit(this.params); }
-  actNo(){ this.onNo.emit(this.params);  }
+    this.msgBoxService.statusMessage.subscribe((fn:boolean)=>{
+        if(fn)
+            this.modalOpen()
+      })
+    }
+
+  actYes():boolean { this.onYes.emit(this.params); return true; }
+  actNo(): boolean { this.onNo.emit(this.params);  return false; }
+
 
   modalOpen()
   {

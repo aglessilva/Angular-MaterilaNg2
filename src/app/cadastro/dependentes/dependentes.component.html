@@ -87,3 +87,8 @@
   <p>{{ formulario.dirty }}</p>
 </section>
 </form>
+<app-alert-message 
+    (onYes)="apertouSim($event)"  
+    [yesOrNo]="true"
+    [message]="{title:'Treinamento de Angular', textBody:'Este formulario sofreu alterações todas e quais quer informação será perdida  deseja destartar so dados deste formalário??'}" #mdl>
+</app-alert-message>

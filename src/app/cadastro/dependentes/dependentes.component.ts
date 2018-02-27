@@ -22,10 +22,10 @@ export class DependentesComponent implements OnInit  {
   
   constructor(
       private formularioBuilder: FormBuilder,
+      private msgBoxService: MsgBoxService,
       private apiUsuarioService: ApiUsuarioService,
       private toastService: MzToastService,
       private route: Router,
-      private msgBoxService: MsgBoxService 
     ) {
       this.msgErrorResource = ValidatorErrorMessage
     }
@@ -60,6 +60,12 @@ export class DependentesComponent implements OnInit  {
       .catch((err: Error) => {
           alert(err.message)
       })
+  }
+
+  apertouSim(eve: any): boolean
+  {
+    debugger
+    return true
   }
 
 
@@ -105,6 +111,9 @@ export class DependentesComponent implements OnInit  {
     //       .catch((err: Error) => console.log('ERRO => ' + err.message + '---> ' + err));
     //   }
   }
+
+
+
 }
 
 

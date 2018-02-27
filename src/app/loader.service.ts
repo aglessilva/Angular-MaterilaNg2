@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -12,9 +13,11 @@ export class LoaderService {
 
 @Injectable()
 export class MsgBoxService {
-    public status: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-    display(value: boolean) {
-        this.status.next(value);
+    public statusMessage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    debugger
+    display(fn: boolean)
+    {
+        this.statusMessage.next(true)
     }
+    
 }

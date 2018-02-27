@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { DependentesComponent } from '../cadastro/dependentes/dependentes.component';
+import { MsgBoxService } from '../loader.service';
 
 // Consider using this interface for all CanDeactivate guards,
 // and have your components implement this interface, too.
@@ -33,6 +34,12 @@ export class CadastroGuardCandActivate implements CanDeactivate<CadastroComponen
 
 @Injectable()
 export class DependenteGuardCandActivate implements CanDeactivate<DependentesComponent> {
+
+    /**
+     *
+     */
+    constructor(private msgBoxService: MsgBoxService) {}
+    
     canDeactivate(
         component: DependentesComponent,
         currentRoute: ActivatedRouteSnapshot, 
@@ -40,8 +47,7 @@ export class DependenteGuardCandActivate implements CanDeactivate<DependentesCom
     ): Observable<boolean>|Promise<boolean>|boolean {
         
         if(component.formulario.dirty)
-           return confirm('todos os dados deste formarios serão perdidos\n deseja continuar!')
-        //else
-           //return true;    
+        return confirm("As alterações deste formalário serão descartadas\n Deseja continuar?")
     }
+
 }

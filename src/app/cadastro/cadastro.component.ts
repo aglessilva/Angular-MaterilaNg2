@@ -253,9 +253,7 @@ export class CadastroComponent implements OnInit {
 }
 
 class ErroApps {
-  /**
-   *
-   */
+
   constructor(
     hasError: boolean,
     msgBox: string
